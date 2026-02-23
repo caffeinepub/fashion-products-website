@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Fashion products website with Pinterest integration",
+  "architectural_notes": [
+    "Website for displaying fashion products",
+    "Pinterest API integration required"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Fashion-themed hero banner with elegant styling showing clothing on hangers or fashion accessories (hero-banner.dim_1200x400.png)\n- Placeholder product image for fashion items when no image URL is provided (placeholder-product.dim_400x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-product-browsing-interface-displaying-fashion-products-in-a-grid-layout-with-product-images-names-prices-and-categories",
+      "title": "Implement product browsing interface displaying fashion products in a grid layout with product images, names, prices, and categories",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-pinterest-integration-allowing-users-to-link-products-to-pinterest-pins-by-storing-pinterest-pin-urls-or-ids-with-each-product",
+      "title": "Add Pinterest integration allowing users to link products to Pinterest pins by storing Pinterest pin URLs or IDs with each product",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-product-detail-view-showing-full-product-information-including-name-description-price-category-large-product-image-and-pinterest-pin-link",
+      "title": "Create product detail view showing full product information including name, description, price, category, large product image, and Pinterest pin link",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-admin-interface-for-authenticated-users-to-add-edit-and-delete-fashion-products-with-form-validation",
+      "title": "Implement admin interface for authenticated users to add, edit, and delete fashion products with form validation",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-category-filtering-to-allow-users-to-browse-products-by-fashion-category-e-g-dresses-shoes-accessories",
+      "title": "Add category filtering to allow users to browse products by fashion category (e.g., dresses, shoes, accessories)",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-a-cohesive-visual-theme-inspired-by-fashion-e-commerce-aesthetics-with-elegant-typography-a-sophisticated-color-palette-avoiding-blue-and-purple-clean-whitespace-and-modern-layout-patterns-that-emphasize-product-imagery",
+      "title": "Design a cohesive visual theme inspired by fashion e-commerce aesthetics with elegant typography, a sophisticated color palette (avoiding blue and purple), clean whitespace, and modern layout patterns that emphasize product imagery",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create fashion products website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Integrate with Pinterest",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Create a product catalog backend with CRUD operations for fashion products including fields: name, description, price, category, image URL, and Pinterest pin ID",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Fashion Products Website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

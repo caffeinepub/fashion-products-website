@@ -1,0 +1,136 @@
+{
+  "kind": "build_request",
+  "title": "Create fashion products website with Pinterest integration",
+  "projectName": "Fashion Pin",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a product catalog backend with CRUD operations for fashion products including fields: name, description, price, category, image URL, and Pinterest pin ID",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend actor exposes methods to create, read, update, and delete fashion products",
+        "Each product stores name, description, price, category, image URL, and Pinterest pin ID",
+        "Products are persisted in stable storage"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement product browsing interface displaying fashion products in a grid layout with product images, names, prices, and categories",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Products display in a responsive grid layout",
+        "Each product card shows image, name, price, and category",
+        "Grid adapts to different screen sizes"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add Pinterest integration allowing users to link products to Pinterest pins by storing Pinterest pin URLs or IDs with each product",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "connected with Pinterest"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Product creation form includes field for Pinterest pin URL or ID",
+        "Products display a link to view the associated Pinterest pin",
+        "Pinterest links open in new tab when clicked"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Create product detail view showing full product information including name, description, price, category, large product image, and Pinterest pin link",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking a product card navigates to detail view",
+        "Detail view displays all product information",
+        "Pinterest pin link is prominently displayed if available"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement admin interface for authenticated users to add, edit, and delete fashion products with form validation",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin section requires Internet Identity authentication",
+        "Form includes all product fields with appropriate input types",
+        "Price validation ensures positive numbers",
+        "Success and error messages display after operations"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add category filtering to allow users to browse products by fashion category (e.g., dresses, shoes, accessories)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Category filter dropdown or buttons display above product grid",
+        "Selecting a category filters the displayed products",
+        "All categories option shows all products"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Design a cohesive visual theme inspired by fashion e-commerce aesthetics with elegant typography, a sophisticated color palette (avoiding blue and purple), clean whitespace, and modern layout patterns that emphasize product imagery",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Consistent color scheme applied across all pages",
+        "Typography hierarchy enhances readability and elegance",
+        "Layout emphasizes visual appeal of fashion products",
+        "Design feels cohesive and professional"
+      ]
+    }
+  ],
+  "constraints": [
+    "Use Internet Identity for authentication",
+    "Pinterest integration should store pin URLs/IDs, not require direct API access",
+    "All product data must be stored in the Motoko backend"
+  ],
+  "nonGoals": [
+    "Direct Pinterest API integration for posting or fetching pins",
+    "Payment processing or e-commerce checkout",
+    "User reviews or ratings system",
+    "Shopping cart functionality"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Fashion-themed hero banner with elegant styling showing clothing on hangers or fashion accessories (hero-banner.dim_1200x400.png)",
+      "Placeholder product image for fashion items when no image URL is provided (placeholder-product.dim_400x600.png)"
+    ],
+    "edits": []
+  }
+}
