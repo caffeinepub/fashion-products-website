@@ -2,7 +2,10 @@ import { useState, useMemo } from 'react';
 import { useGetAllProducts } from '../hooks/useQueries';
 import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
+import CategoryImageSection from '../components/CategoryImageSection';
 import { Skeleton } from '../components/ui/skeleton';
+import { Button } from '../components/ui/button';
+import { ExternalLink } from 'lucide-react';
 
 export default function ProductBrowse() {
   const { data: products, isLoading, error } = useGetAllProducts();
@@ -50,6 +53,55 @@ export default function ProductBrowse() {
           </div>
         </div>
       </div>
+
+      {/* Promotional Section */}
+      <div className="bg-accent/30 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="relative overflow-hidden rounded-lg shadow-lg mb-6">
+              <img
+                src="/assets/ms_df88y_512_388205135.jpg"
+                alt="Featured Fashion"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <Button
+              size="lg"
+              className="font-semibold text-lg px-8 py-6 shadow-md hover:shadow-lg transition-all"
+              onClick={() => window.open('https://www.meesho.com/af_invite/234223027:youtube_long_form:1998242?p_id=388205135&ext_id=6f4kzz&utm_source=youtube_long_form', '_blank', 'noopener,noreferrer')}
+            >
+              Look Out
+              <ExternalLink className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Second Promotional Section */}
+      <div className="bg-background py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="relative overflow-hidden rounded-lg shadow-lg mb-6">
+              <img
+                src="/assets/ms_9wecb_512_690945320.jpg"
+                alt="Featured Fashion Item"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <Button
+              size="lg"
+              className="font-semibold text-lg px-8 py-6 shadow-md hover:shadow-lg transition-all"
+              onClick={() => window.open('https://www.meesho.com/af_invite/234223027:youtube_long_form:1998930?p_id=690945320&ext_id=bfdctk&utm_source=youtube_long_form', '_blank', 'noopener,noreferrer')}
+            >
+              Look Out
+              <ExternalLink className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Category Image Section */}
+      <CategoryImageSection />
 
       {/* Products Section */}
       <div className="container mx-auto px-4 py-12">

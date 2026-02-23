@@ -1,15 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Create a fashion products website with product catalog, Pinterest integration, category filtering, and admin management.
+**Goal:** Add a clickable category section to the product browsing page using the uploaded images, where clicking the category image reveals related product images.
 
 **Planned changes:**
-- Build backend with CRUD operations for fashion products (name, description, price, category, image URL, Pinterest pin ID)
-- Create product browsing interface with responsive grid layout displaying product cards
-- Implement Pinterest integration by storing pin URLs/IDs and displaying links to Pinterest
-- Add product detail view showing full product information and Pinterest link
-- Create admin interface with Internet Identity authentication for managing products
-- Add category filtering to browse products by fashion category
-- Design elegant fashion e-commerce aesthetic with sophisticated color palette (avoiding blue/purple), clean typography, and modern layout emphasizing product imagery
+- Display 8 uploaded product images (1771838406102.png through 1771838406102-7.png) below the existing Meesho promotional sections on the ProductBrowse page
+- Make the first image (1771838406102.png) act as a category thumbnail that toggles the visibility of the remaining 7 product images when clicked
+- Render all images as static assets from frontend/public/assets/uploaded directory
+- Display the product images in a grid layout with hover and active state visual feedback
 
-**User-visible outcome:** Users can browse fashion products in a grid, filter by category, view product details with Pinterest links, and authenticated admins can manage the product catalog through a form-based interface.
+**User-visible outcome:** Users can click on a category image to expand and view related product images below it on the product browsing page.

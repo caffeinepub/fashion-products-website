@@ -7,10 +7,11 @@
   "frontend/src/components/CategoryFilter.tsx": "Category filter component with button group for filtering products by category or showing all products.",
   "frontend/src/components/ProductForm.tsx": "Form component for creating and editing products with validation using React Hook Form, supporting all product fields including Pinterest pin ID.",
   "frontend/src/components/AccessDeniedScreen.tsx": "Access denied screen shown to non-admin users attempting to access admin-only pages.",
-  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with hero banner, category filtering, and responsive product grid layout.",
+  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with hero banner, two promotional sections with Meesho affiliate links, interactive category image section, category filtering, and responsive product grid layout.",
   "frontend/src/pages/ProductDetail.tsx": "Product detail page displaying full product information, large image, and prominent Pinterest link button when available.",
   "frontend/src/pages/AdminProducts.tsx": "Admin dashboard for managing products with table view, add/edit/delete operations, and access control.",
   "frontend/src/index.css": "Global styles with custom OKLCH color system using warm neutrals and earth tones, Playfair Display serif font for headings, and Inter for body text.",
   "frontend/tailwind.config.js": "Tailwind configuration with custom color palette, typography (Playfair Display and Inter fonts), and elegant shadow utilities for fashion e-commerce aesthetic.",
-  "frontend/src/main.tsx": "Application entry point with React Query, Internet Identity provider, and Sonner toast notifications setup."
+  "frontend/src/main.tsx": "Application entry point with React Query, Internet Identity provider, and Sonner toast notifications setup.",
+  "frontend/src/components/CategoryImageSection.tsx": "Interactive category section component that displays a clickable category thumbnail image which toggles the visibility of 7 product images in a responsive grid layout with hover effects and smooth animations."
 }

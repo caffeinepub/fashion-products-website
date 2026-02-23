@@ -1,183 +1,59 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fashion Pin - Frontend Implementation",
+  "title": "Add clickable category section with uploaded product images",
   "requirements": [
     {
-      "id": "REQ-2",
-      "summary": "Implement product browsing interface with responsive grid layout",
+      "id": "REQ-12",
+      "summary": "Display uploaded images below promotional sections on ProductBrowse page",
       "acceptanceCriteria": [
-        "Products display in a responsive grid layout",
-        "Each product card shows image, name, price, and category",
-        "Grid adapts to different screen sizes"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ProductBrowse.tsx",
-          "operation": "create",
-          "description": "Create product browsing page component that fetches products using getAllProducts() backend method and displays them in a responsive grid. Each product card shows the image (or placeholder-product.dim_400x600.png from frontend/public/assets/generated/ if imageUrl is empty), name, price formatted as currency, and category. Use authorization component to ensure user is authenticated before showing products. Include loading and error states. Make cards clickable to navigate to product detail view."
-        },
-        {
-          "path": "frontend/src/components/ProductCard.tsx",
-          "operation": "create",
-          "description": "Create reusable product card component accepting product prop. Display product image with fallback to frontend/public/assets/generated/placeholder-product.dim_400x600.png, product name, formatted price, and category badge. Use Tailwind for styling with elegant fashion e-commerce aesthetics. Make entire card clickable with hover effects."
-        },
-        {
-          "path": "frontend/src/hooks/useProducts.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching all products using actor.getAllProducts(). Include proper loading, error, and success states. Cache products with appropriate stale time. Ensure actor dependency is properly handled."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Display Pinterest pin links with products",
-      "acceptanceCriteria": [
-        "Product creation form includes field for Pinterest pin URL or ID",
-        "Products display a link to view the associated Pinterest pin",
-        "Pinterest links open in new tab when clicked"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/ProductCard.tsx",
-          "operation": "modify",
-          "description": "Add Pinterest pin link display to product cards. Show Pinterest icon/link when pinterestPinId is present. Format pinterestPinId as clickable link that opens in new tab (target='_blank' rel='noopener noreferrer'). Style link to be visually distinct and aligned with fashion aesthetics."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Create product detail view with full product information",
-      "acceptanceCriteria": [
-        "Clicking a product card navigates to detail view",
-        "Detail view displays all product information",
-        "Pinterest pin link is prominently displayed if available"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ProductDetail.tsx",
-          "operation": "create",
-          "description": "Create product detail page component that accepts product ID from route params. Fetch single product using getProduct(id) backend method. Display large product image (or placeholder-product.dim_400x600.png from frontend/public/assets/generated/ if imageUrl is empty), product name as heading, full description, price prominently displayed, category, and Pinterest pin link if available. Format Pinterest link as prominent call-to-action button opening in new tab. Include back navigation to browse page. Handle loading and error states."
-        },
-        {
-          "path": "frontend/src/hooks/useProduct.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching single product by ID using actor.getProduct(id). Include proper loading, error, and success states. Handle product not found scenario."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route for product detail page at path '/product/:id' using React Router. Wire ProductDetail component to this route. Ensure route is protected with authentication check using authorization component."
-        },
-        {
-          "path": "frontend/src/components/ProductCard.tsx",
-          "operation": "modify",
-          "description": "Wrap product card with React Router Link or use onClick navigation to route to '/product/:id' when card is clicked. Maintain hover states and cursor pointer styling."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Implement admin interface for product management with authentication",
-      "acceptanceCriteria": [
-        "Admin section requires Internet Identity authentication",
-        "Form includes all product fields with appropriate input types",
-        "Price validation ensures positive numbers",
-        "Success and error messages display after operations"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AdminProducts.tsx",
-          "operation": "create",
-          "description": "Create admin products management page component. Use authorization component to check if user isCallerAdmin() before rendering admin interface. Display list of all products with edit and delete actions for each. Include button to open create product form. Show AccessDeniedScreen component for non-admin users. Include success/error toast notifications for operations."
-        },
-        {
-          "path": "frontend/src/components/ProductForm.tsx",
-          "operation": "create",
-          "description": "Create product form component for creating and editing products. Include controlled inputs for name (text), description (textarea), price (number with min=0 validation), category (text or select), imageUrl (text URL), and pinterestPinId (text). Use React Hook Form for form management and validation. Ensure price is positive number. Accept onSubmit callback and mode prop ('create' or 'edit'). Display validation errors inline. Style with elegant fashion aesthetics."
-        },
-        {
-          "path": "frontend/src/hooks/useProductMutations.ts",
-          "operation": "create",
-          "description": "Create React Query mutations for product operations: addProduct, updateProduct, and deleteProduct. Each mutation calls respective backend method (addProduct, updateProduct, deleteProduct). Include optimistic updates and automatic query invalidation on success. Return mutation states for loading, error, and success handling."
-        },
-        {
-          "path": "frontend/src/components/AccessDeniedScreen.tsx",
-          "operation": "create",
-          "description": "Create access denied component shown to non-admin users attempting to access admin pages. Display friendly message explaining admin access is required. Include link back to product browse page. Style consistently with app theme."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route for admin products page at path '/admin/products'. Wire AdminProducts component to this route. Ensure route is protected with authentication check using authorization component. Add navigation link to admin section in app header/navigation for admin users only."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Add category filtering for product browsing",
-      "acceptanceCriteria": [
-        "Category filter dropdown or buttons display above product grid",
-        "Selecting a category filters the displayed products",
-        "All categories option shows all products"
+        "All 8 uploaded images are displayed on the ProductBrowse page",
+        "Images are positioned below the two existing Meesho promotional sections",
+        "Images maintain consistent styling with the existing page design"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/ProductBrowse.tsx",
           "operation": "modify",
-          "description": "Add category filter UI above product grid. Extract unique categories from fetched products. Display category filter as button group or dropdown with 'All' option plus each unique category. Implement client-side filtering to show only products matching selected category. Style filter controls with fashion-forward design. Maintain filter state in component."
-        },
-        {
-          "path": "frontend/src/components/CategoryFilter.tsx",
-          "operation": "create",
-          "description": "Create reusable category filter component accepting categories array, selected category, and onChange callback props. Display filter options as styled buttons or dropdown. Highlight active category. Use Tailwind for responsive and elegant styling."
+          "description": "Add a new section below the existing two Meesho promotional sections that displays all 8 uploaded images (frontend/public/assets/uploaded/1771838406102.png, frontend/public/assets/uploaded/1771838406102-1.png, frontend/public/assets/uploaded/1771838406102-2.png, frontend/public/assets/uploaded/1771838406102-3.png, frontend/public/assets/uploaded/1771838406102-4.png, frontend/public/assets/uploaded/1771838406102-5.png, frontend/public/assets/uploaded/1771838406102-6.png, frontend/public/assets/uploaded/1771838406102-7.png) with consistent styling that matches the existing page design"
         }
       ]
     },
     {
-      "id": "REQ-7",
-      "summary": "Design cohesive fashion e-commerce visual theme",
+      "id": "REQ-13",
+      "summary": "Implement interactive category section with collapsible product images",
       "acceptanceCriteria": [
-        "Consistent color scheme applied across all pages",
-        "Typography hierarchy enhances readability and elegance",
-        "Layout emphasizes visual appeal of fashion products",
-        "Design feels cohesive and professional"
+        "The first image (1771838406102.png) acts as a category thumbnail/trigger",
+        "Clicking the first image toggles the visibility of the remaining 7 product images",
+        "Product images display in a grid layout underneath the clicked category image",
+        "The interaction provides visual feedback (hover states, active states)"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Define global CSS custom properties for fashion-inspired color palette avoiding blue and purple (use warm neutrals, blacks, whites, earth tones, or metallics). Set elegant font stack with sophisticated typography. Define base styles for body, headings, and links. Ensure sufficient whitespace and clean aesthetic. Import and configure any global font families."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend Tailwind theme with custom color palette matching fashion e-commerce aesthetics (avoiding blue and purple). Define custom font families for elegant typography. Configure spacing scale to support generous whitespace. Add custom utilities if needed for fashion-specific design patterns."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/components/CategoryImageSection.tsx",
           "operation": "create",
-          "description": "Create main layout component wrapping all pages. Include navigation header with app branding, login/logout button using authorization component, and admin link (visible only to admins). Incorporate hero-banner.dim_1200x400.png from frontend/public/assets/generated/ as hero section on main product browse page. Use consistent padding, max-width container, and elegant styling. Include footer if needed. Apply fashion-focused design aesthetic throughout."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wrap all routes with Layout component to ensure consistent navigation, branding, and styling across application. Ensure layout includes authentication state and displays user profile name instead of principal ID."
+          "description": "Create a reusable component that displays the category thumbnail (frontend/public/assets/uploaded/1771838406102.png) as a clickable trigger and shows/hides the 7 product images (frontend/public/assets/uploaded/1771838406102-1.png through frontend/public/assets/uploaded/1771838406102-7.png) in a responsive grid layout when clicked, with hover and active state visual feedback"
         },
         {
           "path": "frontend/src/pages/ProductBrowse.tsx",
           "operation": "modify",
-          "description": "Apply consistent spacing, typography, and color scheme matching the defined fashion theme. Ensure product grid has clean whitespace and emphasizes product imagery. Use elegant headings and refined styling throughout."
-        },
+          "description": "Import and render the CategoryImageSection component in the section created for REQ-12, replacing the static image display with the interactive category section component"
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Reference uploaded product images as static assets",
+      "acceptanceCriteria": [
+        "All 8 uploaded images are accessible from frontend/public/assets/uploaded/",
+        "Images load correctly without backend routing",
+        "Image paths are properly referenced in the ProductBrowse component"
+      ],
+      "file_operations": [
         {
-          "path": "frontend/src/pages/ProductDetail.tsx",
+          "path": "frontend/src/components/CategoryImageSection.tsx",
           "operation": "modify",
-          "description": "Apply consistent typography hierarchy, color scheme, and spacing from fashion theme. Make product images prominent with clean layout. Style Pinterest CTA button elegantly. Ensure cohesive look with rest of application."
-        },
-        {
-          "path": "frontend/src/pages/AdminProducts.tsx",
-          "operation": "modify",
-          "description": "Apply consistent styling from fashion theme to admin interface. Ensure forms, buttons, and tables match overall aesthetic while maintaining usability for management tasks."
+          "description": "Ensure all image references use the correct static asset paths from frontend/public/assets/uploaded/ directory (e.g., /assets/uploaded/1771838406102.png) and include appropriate alt text, loading states, and error handling for each image"
         }
       ]
     }

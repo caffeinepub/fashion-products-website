@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 9,
   "summary": "Fashion products website with Pinterest integration",
   "architectural_notes": [
     "Website for displaying fashion products",
-    "Pinterest API integration required"
+    "Pinterest API integration required",
+    "Category-based product navigation with expandable sections"
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Fashion-themed hero banner with elegant styling showing clothing on hangers or fashion accessories (hero-banner.dim_1200x400.png)\n- Placeholder product image for fashion items when no image URL is provided (placeholder-product.dim_400x600.png)",
   "existing_features": [
     {
       "id": "feature-implement-product-browsing-interface-displaying-fashion-products-in-a-grid-layout-with-product-images-names-prices-and-categories",
@@ -57,6 +57,62 @@
         "REQ-7"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-the-uploaded-image-ms-df88y-512-388205135-jpg-to-the-product-browsing-page-below-the-hero-banner-section",
+      "title": "Add the uploaded image 'ms_df88y_512_388205135.jpg' to the product browsing page below the hero banner section",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-clickable-look-out-button-below-the-image-that-redirects-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-youtube-long-form-1998242-p-id-388205135-ext-id-6f4kzz-utm-source-youtube-long-form",
+      "title": "Add a clickable 'Look Out' button below the image that redirects to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:youtube_long_form:1998242?p_id=388205135&ext_id=6f4kzz&utm_source=youtube_long_form",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-uploaded-image-ms-9wecb-512-690945320-jpg-to-the-product-browsing-page-positioned-on-the-right-side-below-the-existing-promotional-section",
+      "title": "Add the uploaded image 'ms_9wecb_512_690945320.jpg' to the product browsing page, positioned on the right side below the existing promotional section",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-look-out-button-below-the-newly-added-image-that-redirects-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-youtube-long-form-1998930-p-id-690945320-ext-id-bfdctk-utm-source-youtube-long-form-when-clicked",
+      "title": "Add a 'Look Out' button below the newly added image that redirects to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:youtube_long_form:1998930?p_id=690945320&ext_id=bfdctk&utm_source=youtube_long_form when clicked",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-uploaded-images-1771838406102-png-1771838406102-1-png-1771838406102-2-png-1771838406102-3-png-1771838406102-4-png-1771838406102-5-png-1771838406102-6-png-1771838406102-7-png-to-the-product-browsing-page-positioned-below-the-existing-promotional-sections",
+      "title": "Add the uploaded images (1771838406102.png, 1771838406102-1.png, 1771838406102-2.png, 1771838406102-3.png, 1771838406102-4.png, 1771838406102-5.png, 1771838406102-6.png, 1771838406102-7.png) to the product browsing page positioned below the existing promotional sections",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-category-section-where-clicking-on-the-first-uploaded-image-1771838406102-png-reveals-the-remaining-product-images-1771838406102-1-png-through-1771838406102-7-png-underneath",
+      "title": "Create a category section where clicking on the first uploaded image (1771838406102.png) reveals the remaining product images (1771838406102-1.png through 1771838406102-7.png) underneath",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-uploaded-product-images-1771838406102-png-through-1771838406102-7-png-as-static-assets-from-frontend-public-assets-uploaded-directory",
+      "title": "Render the uploaded product images (1771838406102.png through 1771838406102-7.png) as static assets from frontend/public/assets/uploaded directory",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -78,6 +134,24 @@
       "reqIds": [
         "REQ-1"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add a photo with clickable lookout button that links to Meesho affiliate URL",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add image on right with lookout icon below it that redirects to Meesho affiliate URL (product ID 690945320)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add clickable category feature where clicking an image displays related product images underneath",
+      "reqIds": [],
       "status": "pending"
     }
   ],
