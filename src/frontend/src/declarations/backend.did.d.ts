@@ -19,29 +19,36 @@ export interface Product {
   'category' : string,
   'price' : number,
 }
+export interface ProductInput {
+  'pinterestPinId' : string,
+  'name' : string,
+  'description' : string,
+  'imageUrl' : string,
+  'category' : string,
+  'price' : number,
+}
 export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
-  'addProduct' : ActorMethod<
-    [string, string, number, string, string, string],
-    undefined
-  >,
+  'addProduct' : ActorMethod<[ProductInput], bigint>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'deleteProduct' : ActorMethod<[bigint], undefined>,
   'getAllProducts' : ActorMethod<[], Array<Product>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
-  'getProduct' : ActorMethod<[bigint], Product>,
+  'getProduct' : ActorMethod<[bigint], [] | [Product]>,
+  'getProductCount' : ActorMethod<[], bigint>,
+  'getProductCountByCategory' : ActorMethod<[string], bigint>,
+  'getProductsByCategory' : ActorMethod<[string], Array<Product>>,
+  'getProductsByName' : ActorMethod<[string], Array<Product>>,
+  'getProductsByPriceRange' : ActorMethod<[number, number], Array<Product>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
-  'updateProduct' : ActorMethod<
-    [bigint, string, string, number, string, string, string],
-    undefined
-  >,
+  'updateProduct' : ActorMethod<[bigint, ProductInput], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

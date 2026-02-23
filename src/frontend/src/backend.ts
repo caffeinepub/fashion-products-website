@@ -89,6 +89,14 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface ProductInput {
+    pinterestPinId: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    category: string;
+    price: number;
+}
 export interface UserProfile {
     name: string;
 }
@@ -108,19 +116,24 @@ export enum UserRole {
 }
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
-    addProduct(name: string, description: string, price: number, category: string, imageUrl: string, pinterestPinId: string): Promise<void>;
+    addProduct(data: ProductInput): Promise<bigint>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     deleteProduct(id: bigint): Promise<void>;
     getAllProducts(): Promise<Array<Product>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
-    getProduct(id: bigint): Promise<Product>;
+    getProduct(id: bigint): Promise<Product | null>;
+    getProductCount(): Promise<bigint>;
+    getProductCountByCategory(category: string): Promise<bigint>;
+    getProductsByCategory(category: string): Promise<Array<Product>>;
+    getProductsByName(nameQuery: string): Promise<Array<Product>>;
+    getProductsByPriceRange(minPrice: number, maxPrice: number): Promise<Array<Product>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
-    updateProduct(id: bigint, name: string, description: string, price: number, category: string, imageUrl: string, pinterestPinId: string): Promise<void>;
+    updateProduct(id: bigint, data: ProductInput): Promise<void>;
 }
-import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { Product as _Product, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -137,17 +150,17 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async addProduct(arg0: string, arg1: string, arg2: number, arg3: string, arg4: string, arg5: string): Promise<void> {
+    async addProduct(arg0: ProductInput): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.addProduct(arg0, arg1, arg2, arg3, arg4, arg5);
+                const result = await this.actor.addProduct(arg0);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addProduct(arg0, arg1, arg2, arg3, arg4, arg5);
+            const result = await this.actor.addProduct(arg0);
             return result;
         }
     }
@@ -221,17 +234,87 @@ export class Backend implements backendInterface {
             return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
         }
     }
-    async getProduct(arg0: bigint): Promise<Product> {
+    async getProduct(arg0: bigint): Promise<Product | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getProduct(arg0);
-                return result;
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getProduct(arg0);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getProductCount(): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductCount();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductCount();
+            return result;
+        }
+    }
+    async getProductCountByCategory(arg0: string): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductCountByCategory(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductCountByCategory(arg0);
+            return result;
+        }
+    }
+    async getProductsByCategory(arg0: string): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductsByCategory(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductsByCategory(arg0);
+            return result;
+        }
+    }
+    async getProductsByName(arg0: string): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductsByName(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductsByName(arg0);
+            return result;
+        }
+    }
+    async getProductsByPriceRange(arg0: number, arg1: number): Promise<Array<Product>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProductsByPriceRange(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProductsByPriceRange(arg0, arg1);
             return result;
         }
     }
@@ -277,17 +360,17 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async updateProduct(arg0: bigint, arg1: string, arg2: string, arg3: number, arg4: string, arg5: string, arg6: string): Promise<void> {
+    async updateProduct(arg0: bigint, arg1: ProductInput): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.updateProduct(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+                const result = await this.actor.updateProduct(arg0, arg1);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.updateProduct(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            const result = await this.actor.updateProduct(arg0, arg1);
             return result;
         }
     }
@@ -296,6 +379,9 @@ function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Ui
     return from_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
 function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Product]): Product | null {
     return value.length === 0 ? null : value[0];
 }
 function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {

@@ -1,68 +1,74 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Rename application from Fashion Pin to Fashion Forum",
+  "title": "Resolve loading timeout issue",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Update all occurrences of 'Fashion Pin' to 'Fashion Forum' in the application header/branding within the Layout component",
+      "summary": "Investigate and fix the loading timeout issue by improving error handling and loading state management across useQueries hooks and LoadingTimeout component usage",
       "acceptanceCriteria": [
-        "Application name displays as 'Fashion Forum' in the header",
-        "No references to 'Fashion Pin' remain visible in the UI"
+        "Loading states resolve properly without timeouts",
+        "Error states are properly handled and displayed to users",
+        "No infinite loading spinners occur during normal operation",
+        "Backend queries return responses within reasonable time"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Replace all instances of 'Fashion Pin' with 'Fashion Forum' in the header branding section, navigation links, and any text content within the Layout component"
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Update the HTML document title from 'Fashion Pin' to 'Fashion Forum' in frontend/index.html",
-      "acceptanceCriteria": [
-        "Browser tab displays 'Fashion Forum' as the page title"
-      ],
-      "file_operations": [
+          "description": "Review and enhance all React Query hooks to ensure proper error handling with retry configuration, staleTime, and cacheTime settings. Add explicit error boundaries for failed queries. Ensure isLoading, isFetching, and error states are properly exposed and handled. Add refetchOnWindowFocus: false to prevent unnecessary refetches that could cause timeout issues."
+        },
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/pages/ProductBrowse.tsx",
           "operation": "modify",
-          "description": "Update the <title> tag content from 'Fashion Pin' to 'Fashion Forum'"
+          "description": "Improve loading state management by properly handling the loading, error, and success states from useGetAllProducts query. Wrap product data fetching with LoadingTimeout component and ensure retry mechanism is properly connected. Add error boundary display for failed product fetches. Ensure the component doesn't render product-dependent UI until data is successfully loaded."
+        },
+        {
+          "path": "frontend/src/pages/AdminProducts.tsx",
+          "operation": "modify",
+          "description": "Enhance loading state handling for useGetAllProducts and useGetCallerUserRole queries. Wrap admin data fetching with LoadingTimeout component and ensure proper error display. Add combined loading state that waits for both actor initialization and data fetching. Implement retry mechanism for failed queries. Ensure access control checks don't block indefinitely on loading states."
+        },
+        {
+          "path": "frontend/src/pages/ProductDetail.tsx",
+          "operation": "modify",
+          "description": "Improve useGetProduct query error handling and loading state management. Wrap product detail fetching with LoadingTimeout component. Add proper error display for non-existent products or failed fetches. Ensure the page handles null/undefined product data gracefully without causing infinite loading."
+        },
+        {
+          "path": "frontend/src/components/LoadingTimeout.tsx",
+          "operation": "modify",
+          "description": "Enhance the LoadingTimeout component to better handle edge cases. Ensure the timeout mechanism properly triggers even when queries are stuck in perpetual loading. Add logging for timeout events to help diagnose issues. Ensure the retry callback properly resets query states."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Replace any remaining 'Fashion Pin' text references with 'Fashion Forum' throughout the frontend codebase, including comments and metadata",
+      "summary": "Verify that all React Query hooks properly handle loading, error, and success states without causing indefinite loading conditions in ProductBrowse and AdminProducts pages",
       "acceptanceCriteria": [
-        "All user-facing and code references use 'Fashion Forum' consistently"
+        "ProductBrowse page loads products without timeout",
+        "AdminProducts page loads admin data without timeout",
+        "Loading states transition properly to success or error states",
+        "LoadingTimeout component triggers retry mechanism when appropriate"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ProductBrowse.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Search for and replace any instances of 'Fashion Pin' with 'Fashion Forum' in hero banner text, promotional sections, or any other visible content"
+          "description": "Add comprehensive query configuration to all hooks including retry: 2, retryDelay: 1000, staleTime: 30000, and refetchOnWindowFocus: false. Ensure enabled flags properly gate query execution based on actor availability. Add explicit error type handling and ensure all queries properly transition from loading to success or error states."
         },
         {
-          "path": "frontend/src/pages/ProductDetail.tsx",
+          "path": "frontend/src/pages/ProductBrowse.tsx",
           "operation": "modify",
-          "description": "Search for and replace any instances of 'Fashion Pin' with 'Fashion Forum' in page content, metadata, or comments"
+          "description": "Implement defensive loading state checks that properly handle actor fetching state, query loading state, and error states. Ensure LoadingTimeout wraps the entire data-dependent section and passes proper retry callback that invalidates queries. Add fallback UI for error states. Verify that all product-dependent components check for data availability before rendering."
         },
         {
           "path": "frontend/src/pages/AdminProducts.tsx",
           "operation": "modify",
-          "description": "Search for and replace any instances of 'Fashion Pin' with 'Fashion Forum' in admin panel headings, labels, or comments"
+          "description": "Add explicit handling for combined loading states from multiple queries (products and user role). Ensure access control checks complete before rendering admin UI. Wrap data fetching with LoadingTimeout and implement proper retry logic that re-fetches both products and role. Add error boundaries for authorization failures and query errors."
         },
         {
-          "path": "frontend/src/components/AccessDeniedScreen.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Search for and replace any instances of 'Fashion Pin' with 'Fashion Forum' in error messages or component text"
-        },
-        {
-          "path": "frontend/src/components/ProfileSetup.tsx",
-          "operation": "modify",
-          "description": "Search for and replace any instances of 'Fashion Pin' with 'Fashion Forum' in welcome message or dialog content"
+          "description": "Review ProfileSetup modal display logic to ensure it doesn't interfere with page loading states. Verify that the modal only shows after actor is ready and profile query has completed (not just started). Ensure the showProfileSetup condition properly checks isFetched state to prevent premature display during loading."
         }
       ]
     }

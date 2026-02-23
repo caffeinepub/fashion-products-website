@@ -8,6 +8,14 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const ProductInput = IDL.Record({
+  'pinterestPinId' : IDL.Text,
+  'name' : IDL.Text,
+  'description' : IDL.Text,
+  'imageUrl' : IDL.Text,
+  'category' : IDL.Text,
+  'price' : IDL.Float64,
+});
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'user' : IDL.Null,
@@ -26,17 +34,22 @@ export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-  'addProduct' : IDL.Func(
-      [IDL.Text, IDL.Text, IDL.Float64, IDL.Text, IDL.Text, IDL.Text],
-      [],
-      [],
-    ),
+  'addProduct' : IDL.Func([ProductInput], [IDL.Nat], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'deleteProduct' : IDL.Func([IDL.Nat], [], []),
   'getAllProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
-  'getProduct' : IDL.Func([IDL.Nat], [Product], ['query']),
+  'getProduct' : IDL.Func([IDL.Nat], [IDL.Opt(Product)], ['query']),
+  'getProductCount' : IDL.Func([], [IDL.Nat], ['query']),
+  'getProductCountByCategory' : IDL.Func([IDL.Text], [IDL.Nat], ['query']),
+  'getProductsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
+  'getProductsByName' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
+  'getProductsByPriceRange' : IDL.Func(
+      [IDL.Float64, IDL.Float64],
+      [IDL.Vec(Product)],
+      ['query'],
+    ),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
@@ -44,16 +57,20 @@ export const idlService = IDL.Service({
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
-  'updateProduct' : IDL.Func(
-      [IDL.Nat, IDL.Text, IDL.Text, IDL.Float64, IDL.Text, IDL.Text, IDL.Text],
-      [],
-      [],
-    ),
+  'updateProduct' : IDL.Func([IDL.Nat, ProductInput], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const ProductInput = IDL.Record({
+    'pinterestPinId' : IDL.Text,
+    'name' : IDL.Text,
+    'description' : IDL.Text,
+    'imageUrl' : IDL.Text,
+    'category' : IDL.Text,
+    'price' : IDL.Float64,
+  });
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'user' : IDL.Null,
@@ -72,17 +89,26 @@ export const idlFactory = ({ IDL }) => {
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-    'addProduct' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Float64, IDL.Text, IDL.Text, IDL.Text],
-        [],
-        [],
-      ),
+    'addProduct' : IDL.Func([ProductInput], [IDL.Nat], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'deleteProduct' : IDL.Func([IDL.Nat], [], []),
     'getAllProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
-    'getProduct' : IDL.Func([IDL.Nat], [Product], ['query']),
+    'getProduct' : IDL.Func([IDL.Nat], [IDL.Opt(Product)], ['query']),
+    'getProductCount' : IDL.Func([], [IDL.Nat], ['query']),
+    'getProductCountByCategory' : IDL.Func([IDL.Text], [IDL.Nat], ['query']),
+    'getProductsByCategory' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(Product)],
+        ['query'],
+      ),
+    'getProductsByName' : IDL.Func([IDL.Text], [IDL.Vec(Product)], ['query']),
+    'getProductsByPriceRange' : IDL.Func(
+        [IDL.Float64, IDL.Float64],
+        [IDL.Vec(Product)],
+        ['query'],
+      ),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
@@ -90,19 +116,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
-    'updateProduct' : IDL.Func(
-        [
-          IDL.Nat,
-          IDL.Text,
-          IDL.Text,
-          IDL.Float64,
-          IDL.Text,
-          IDL.Text,
-          IDL.Text,
-        ],
-        [],
-        [],
-      ),
+    'updateProduct' : IDL.Func([IDL.Nat, ProductInput], [], []),
   });
 };
 

@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { useGetAllProducts, useIsCallerAdmin, useAddProduct, useUpdateProduct, useDeleteProduct } from '../hooks/useQueries';
+import { useActor } from '../hooks/useActor';
 import AccessDeniedScreen from '../components/AccessDeniedScreen';
 import ProductForm from '../components/ProductForm';
+import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '../components/ui/alert-dialog';
-import { Skeleton } from '../components/ui/skeleton';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 import type { Product } from '../backend';
 
 export default function AdminProducts() {
-  const { data: isAdmin, isLoading: adminLoading } = useIsCallerAdmin();
-  const { data: products, isLoading: productsLoading } = useGetAllProducts();
+  const { isFetching: actorFetching } = useActor();
+  const { data: isAdmin, isLoading: adminLoading, refetch: refetchAdmin } = useIsCallerAdmin();
+  const { data: products, isLoading: productsLoading, refetch: refetchProducts } = useGetAllProducts();
   const addProduct = useAddProduct();
   const updateProduct = useUpdateProduct();
   const deleteProduct = useDeleteProduct();
@@ -21,11 +23,18 @@ export default function AdminProducts() {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [deletingProduct, setDeletingProduct] = useState<Product | null>(null);
 
-  if (adminLoading) {
+  const isLoadingAuth = actorFetching || adminLoading;
+
+  if (isLoadingAuth) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <Skeleton className="h-12 w-64 mb-8" />
-        <Skeleton className="h-96 w-full" />
+        <LoadingTimeout
+          isLoading={isLoadingAuth}
+          timeout={15000}
+          onRetry={() => refetchAdmin()}
+          loadingMessage="Checking admin permissions..."
+          timeoutMessage="Permission check is taking longer than expected"
+        />
       </div>
     );
   }
@@ -82,14 +91,24 @@ export default function AdminProducts() {
             <h1 className="text-4xl font-serif font-bold mb-2">Product Management</h1>
             <p className="text-muted-foreground">Add, edit, and manage your fashion products</p>
           </div>
-          <Button onClick={() => setShowForm(true)} className="gap-2">
-            <Plus className="h-4 w-4" />
+          <Button onClick={() => setShowForm(true)} className="gap-2" disabled={addProduct.isPending}>
+            {addProduct.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
             Add Product
           </Button>
         </div>
 
         {productsLoading ? (
-          <Skeleton className="h-96 w-full" />
+          <LoadingTimeout
+            isLoading={productsLoading}
+            timeout={15000}
+            onRetry={() => refetchProducts()}
+            loadingMessage="Loading products..."
+            timeoutMessage="Products are taking longer than expected to load"
+          />
         ) : products && products.length > 0 ? (
           <div className="border rounded-lg overflow-hidden">
             <Table>
@@ -118,23 +137,36 @@ export default function AdminProducts() {
                     <TableCell>${product.price.toFixed(2)}</TableCell>
                     <TableCell>
                       {product.pinterestPinId ? (
-                        <span className="text-xs text-muted-foreground">Linked</span>
+                        <span className="text-xs text-muted-foreground">✓ Linked</span>
                       ) : (
-                        <span className="text-xs text-muted-foreground">-</span>
+                        <span className="text-xs text-muted-foreground">—</span>
                       )}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(product)}>
-                          <Pencil className="h-4 w-4" />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEdit(product)}
+                          disabled={updateProduct.isPending}
+                        >
+                          {updateProduct.isPending && editingProduct?.id === product.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Pencil className="h-4 w-4" />
+                          )}
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setDeletingProduct(product)}
-                          className="text-destructive hover:text-destructive"
+                          disabled={deleteProduct.isPending}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          {deleteProduct.isPending && deletingProduct?.id === product.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          )}
                         </Button>
                       </div>
                     </TableCell>
@@ -154,7 +186,7 @@ export default function AdminProducts() {
         )}
       </div>
 
-      {/* Product Form Dialog */}
+      {/* Add/Edit Product Dialog */}
       <Dialog open={showForm} onOpenChange={(open) => !open && handleCancel()}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -180,9 +212,20 @@ export default function AdminProducts() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">
-              Delete
+            <AlertDialogCancel disabled={deleteProduct.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={deleteProduct.isPending}
+              className="bg-destructive hover:bg-destructive/90"
+            >
+              {deleteProduct.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

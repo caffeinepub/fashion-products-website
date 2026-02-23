@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Rename the application from "Fashion Pin" to "Fashion Forum" throughout the codebase.
+**Goal:** Fix loading timeout issues preventing pages from loading properly.
 
 **Planned changes:**
-- Update application name in the header/branding to display "Fashion Forum"
-- Change HTML document title to "Fashion Forum"
-- Replace all remaining "Fashion Pin" text references with "Fashion Forum" in the frontend
+- Investigate and fix loading timeout behavior in LoadingTimeout component
+- Review backend actor initialization and authentication flow for hanging requests
+- Verify React Query hooks properly handle loading, error, and success states in ProductBrowse and AdminProducts pages
+- Ensure proper error handling and loading state transitions throughout the application
 
-**User-visible outcome:** The application displays "Fashion Forum" as its name in the browser tab and header, with all branding consistently updated.
+**User-visible outcome:** Pages load successfully without getting stuck in infinite loading states, with proper error messages displayed when issues occur.

@@ -1,30 +1,27 @@
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useGetProduct } from '../hooks/useQueries';
+import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { Skeleton } from '../components/ui/skeleton';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { SiPinterest } from 'react-icons/si';
 
 export default function ProductDetail() {
   const { id } = useParams({ from: '/product/$id' });
   const navigate = useNavigate();
-  const { data: product, isLoading, error } = useGetProduct(BigInt(id));
+  const { data: product, isLoading, error, refetch } = useGetProduct(BigInt(id));
 
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
-          <Skeleton className="h-10 w-32 mb-8" />
-          <div className="grid md:grid-cols-2 gap-12">
-            <Skeleton className="aspect-[2/3] w-full" />
-            <div className="space-y-6">
-              <Skeleton className="h-12 w-3/4" />
-              <Skeleton className="h-8 w-1/4" />
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-12 w-full" />
-            </div>
-          </div>
+          <LoadingTimeout
+            isLoading={isLoading}
+            timeout={15000}
+            onRetry={() => refetch()}
+            loadingMessage="Loading product details..."
+            timeoutMessage="Product details are taking longer than expected to load"
+          />
         </div>
       </div>
     );
@@ -35,7 +32,10 @@ export default function ProductDetail() {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center space-y-4">
           <p className="text-destructive text-lg">Product not found</p>
-          <Button onClick={() => navigate({ to: '/' })}>Return to Products</Button>
+          <div className="flex gap-3 justify-center">
+            <Button onClick={() => navigate({ to: '/' })}>Return to Products</Button>
+            <Button onClick={() => refetch()} variant="outline">Retry</Button>
+          </div>
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { Product, UserProfile } from '../backend';
+import type { Product, UserProfile, ProductInput } from '../backend';
 import { toast } from 'sonner';
 
 export function useGetCallerUserProfile() {
@@ -13,7 +13,11 @@ export function useGetCallerUserProfile() {
       return actor.getCallerUserProfile();
     },
     enabled: !!actor && !actorFetching,
-    retry: false,
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
   });
 
   return {
@@ -48,23 +52,34 @@ export function useGetAllProducts() {
   return useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: async () => {
-      if (!actor) return [];
-      return actor.getAllProducts();
+      if (!actor) throw new Error('Actor not available');
+      const result = await actor.getAllProducts();
+      return result || [];
     },
     enabled: !!actor && !isFetching,
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    gcTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false,
   });
 }
 
 export function useGetProduct(id: bigint) {
   const { actor, isFetching } = useActor();
 
-  return useQuery<Product>({
+  return useQuery<Product | null>({
     queryKey: ['product', id.toString()],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
       return actor.getProduct(id);
     },
     enabled: !!actor && !isFetching && id !== undefined,
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
   });
 }
 
@@ -74,10 +89,15 @@ export function useIsCallerAdmin() {
   return useQuery<boolean>({
     queryKey: ['isAdmin'],
     queryFn: async () => {
-      if (!actor) return false;
+      if (!actor) throw new Error('Actor not available');
       return actor.isCallerAdmin();
     },
     enabled: !!actor && !isFetching,
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
   });
 }
 
@@ -86,23 +106,9 @@ export function useAddProduct() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (product: {
-      name: string;
-      description: string;
-      price: number;
-      category: string;
-      imageUrl: string;
-      pinterestPinId: string;
-    }) => {
+    mutationFn: async (product: ProductInput) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.addProduct(
-        product.name,
-        product.description,
-        product.price,
-        product.category,
-        product.imageUrl,
-        product.pinterestPinId
-      );
+      return actor.addProduct(product);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
@@ -119,25 +125,10 @@ export function useUpdateProduct() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (product: {
-      id: bigint;
-      name: string;
-      description: string;
-      price: number;
-      category: string;
-      imageUrl: string;
-      pinterestPinId: string;
-    }) => {
+    mutationFn: async (data: { id: bigint } & ProductInput) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.updateProduct(
-        product.id,
-        product.name,
-        product.description,
-        product.price,
-        product.category,
-        product.imageUrl,
-        product.pinterestPinId
-      );
+      const { id, ...product } = data;
+      return actor.updateProduct(id, product);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });

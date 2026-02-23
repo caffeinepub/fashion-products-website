@@ -8,12 +8,18 @@ import AdminProducts from './pages/AdminProducts';
 import ProfileSetup from './components/ProfileSetup';
 
 function RootComponent() {
-  const { identity } = useInternetIdentity();
+  const { identity, isInitializing } = useInternetIdentity();
   const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
   const isAuthenticated = !!identity;
 
   // Show profile setup modal if authenticated but no profile exists
-  const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+  // Wait for both identity initialization and profile query to complete
+  const showProfileSetup = 
+    !isInitializing && 
+    isAuthenticated && 
+    !profileLoading && 
+    isFetched && 
+    userProfile === null;
 
   return (
     <>

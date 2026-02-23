@@ -4,12 +4,13 @@ import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
 import CategoryImageSection from '../components/CategoryImageSection';
 import SwipeableGallery from '../components/SwipeableGallery';
-import { Skeleton } from '../components/ui/skeleton';
+import WatchProductSection from '../components/WatchProductSection';
+import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { ExternalLink } from 'lucide-react';
 
 export default function ProductBrowse() {
-  const { data: products, isLoading, error } = useGetAllProducts();
+  const { data: products, isLoading, error, refetch } = useGetAllProducts();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = useMemo(() => {
@@ -36,7 +37,10 @@ export default function ProductBrowse() {
     return (
       <div className="container mx-auto px-4 py-16">
         <div className="text-center text-destructive">
-          <p>Failed to load products. Please try again later.</p>
+          <p className="mb-4">Failed to load products. Please try again later.</p>
+          <Button onClick={() => refetch()} variant="outline">
+            Retry
+          </Button>
         </div>
       </div>
     );
@@ -69,6 +73,9 @@ export default function ProductBrowse() {
           <SwipeableGallery images={swipeableImages} meeshoUrl={meeshoUrl} />
         </div>
       </div>
+
+      {/* Watch Product Section */}
+      <WatchProductSection />
 
       {/* Promotional Section */}
       <div className="bg-accent/30 py-12">
@@ -134,15 +141,13 @@ export default function ProductBrowse() {
       <div className="container mx-auto px-4 py-12">
         {/* Products Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="space-y-3">
-                <Skeleton className="aspect-[2/3] w-full" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-8 w-1/2" />
-              </div>
-            ))}
-          </div>
+          <LoadingTimeout
+            isLoading={isLoading}
+            timeout={15000}
+            onRetry={() => refetch()}
+            loadingMessage="Loading products..."
+            timeoutMessage="Products are taking longer than expected to load"
+          />
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-muted-foreground text-lg">
