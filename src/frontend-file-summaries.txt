@@ -1,17 +1,21 @@
 {
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for product browsing, product details, and admin panel, with profile setup modal integration using a properly named RootComponent.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for product browsing, product details, and admin panel, with profile setup modal integration.",
   "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profiles, products CRUD, and admin checks with proper loading states and toast notifications.",
-  "frontend/src/components/Layout.tsx": "Main layout wrapper with header navigation, branding, authentication controls, admin link, and footer with Caffeine attribution.",
-  "frontend/src/components/ProfileSetup.tsx": "Modal dialog for first-time user profile setup requiring name input before accessing the application.",
+  "frontend/src/components/Layout.tsx": "Main layout wrapper with header navigation displaying \"Fashion Forum\" branding, authentication controls, admin link, and footer with Caffeine attribution",
+  "frontend/src/components/ProfileSetup.tsx": "Modal dialog for first-time user profile setup with \"Fashion Forum\" welcome message requiring name input before accessing the application",
   "frontend/src/components/ProductCard.tsx": "Reusable product card component displaying product image, name, price, category badge, and Pinterest pin indicator with hover effects.",
   "frontend/src/components/CategoryFilter.tsx": "Category filter component with button group for filtering products by category or showing all products.",
   "frontend/src/components/ProductForm.tsx": "Form component for creating and editing products with validation using React Hook Form, supporting all product fields including Pinterest pin ID.",
   "frontend/src/components/AccessDeniedScreen.tsx": "Access denied screen shown to non-admin users attempting to access admin-only pages.",
-  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with hero banner, two promotional sections with Meesho affiliate links, interactive category image section, category filtering, and responsive product grid layout.",
+  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with hero banner, swipeable gallery section featuring two product images with Meesho link, two promotional sections with affiliate links, category filter, responsive product grid layout, and category image section at the bottom.",
   "frontend/src/pages/ProductDetail.tsx": "Product detail page displaying full product information, large image, and prominent Pinterest link button when available.",
   "frontend/src/pages/AdminProducts.tsx": "Admin dashboard for managing products with table view, add/edit/delete operations, and access control.",
   "frontend/src/index.css": "Global styles with custom OKLCH color system using warm neutrals and earth tones, Playfair Display serif font for headings, and Inter for body text.",
   "frontend/tailwind.config.js": "Tailwind configuration with custom color palette, typography (Playfair Display and Inter fonts), and elegant shadow utilities for fashion e-commerce aesthetic.",
   "frontend/src/main.tsx": "Application entry point with React Query, Internet Identity provider, and Sonner toast notifications setup.",
-  "frontend/src/components/CategoryImageSection.tsx": "Interactive category section component that displays a clickable category thumbnail image which toggles the visibility of 7 product images in a responsive grid layout with hover effects and smooth animations."
+  "frontend/src/components/CategoryImageSection.tsx": "Interactive category section component that displays a clickable category thumbnail image which toggles the visibility of 7 product images in a responsive grid layout with hover effects and smooth animations.",
+  "frontend/src/components/SwipeableGallery.tsx": "Swipeable image gallery component with touch/mouse gesture support, navigation arrows, image counter, thumbnail indicators, a \"Look Out\" button linking to Meesho, and a clickable promotional image below the button that redirects to a Meesho affiliate collection.",
+  "frontend/src/hooks/useSwipeGesture.ts": "Custom React hook that detects horizontal swipe gestures using both touch and mouse events with configurable threshold and callbacks for left/right swipes.",
+  "frontend/src/pages/GalleryPage.tsx": "Gallery page component that displays all 19 uploaded product images in a swipeable gallery with the Meesho affiliate link.",
+  "frontend/index.html": "HTML entry point with updated page title \"Fashion Forum\""
 }

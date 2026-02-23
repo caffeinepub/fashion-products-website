@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-the-uploaded-images-1771838406102-png-1771838406102-1-png-1771838406102-2-png-1771838406102-3-png-1771838406102-4-png-1771838406102-5-png-1771838406102-6-png-1771838406102-7-png-to-the-product-browsing-page-positioned-below-the-existing-promotional-sections",
-      "featureTitle": "Add the uploaded images (1771838406102.png, 1771838406102-1.png, 1771838406102-2.png, 1771838406102-3.png, 1771838406102-4.png, 1771838406102-5.png, 1771838406102-6.png, 1771838406102-7.png) to the product browsing page positioned below the existing promotional sections",
+      "featureId": "feature-update-all-occurrences-of-fashion-pin-to-fashion-forum-in-the-application-header-branding-within-the-layout-component",
+      "featureTitle": "Update all occurrences of 'Fashion Pin' to 'Fashion Forum' in the application header/branding within the Layout component",
       "files": [
-        "frontend/src/pages/ProductBrowse.tsx"
+        "frontend/src/components/Layout.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -16,16 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-a-category-section-where-clicking-on-the-first-uploaded-image-1771838406102-png-reveals-the-remaining-product-images-1771838406102-1-png-through-1771838406102-7-png-underneath",
-      "featureTitle": "Create a category section where clicking on the first uploaded image (1771838406102.png) reveals the remaining product images (1771838406102-1.png through 1771838406102-7.png) underneath",
+      "featureId": "feature-update-the-html-document-title-from-fashion-pin-to-fashion-forum-in-frontend-index-html",
+      "featureTitle": "Update the HTML document title from 'Fashion Pin' to 'Fashion Forum' in frontend/index.html",
       "files": [
-        "frontend/src/components/CategoryImageSection.tsx",
-        "frontend/src/pages/ProductBrowse.tsx"
+        "frontend/index.html"
       ],
       "components": [
         "authorization@4.0.0",
@@ -36,15 +35,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-13"
+        "REQ-2"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-render-the-uploaded-product-images-1771838406102-png-through-1771838406102-7-png-as-static-assets-from-frontend-public-assets-uploaded-directory",
-      "featureTitle": "Render the uploaded product images (1771838406102.png through 1771838406102-7.png) as static assets from frontend/public/assets/uploaded directory",
+      "featureId": "feature-replace-any-remaining-fashion-pin-text-references-with-fashion-forum-throughout-the-frontend-codebase-including-comments-and-metadata",
+      "featureTitle": "Replace any remaining 'Fashion Pin' text references with 'Fashion Forum' throughout the frontend codebase, including comments and metadata",
       "files": [
-        "frontend/src/components/CategoryImageSection.tsx"
+        "frontend/src/components/ProfileSetup.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -55,7 +54,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-14"
+        "REQ-3"
       ],
       "confidence": "high"
     }

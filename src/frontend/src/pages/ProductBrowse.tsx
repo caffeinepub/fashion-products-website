@@ -3,6 +3,7 @@ import { useGetAllProducts } from '../hooks/useQueries';
 import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
 import CategoryImageSection from '../components/CategoryImageSection';
+import SwipeableGallery from '../components/SwipeableGallery';
 import { Skeleton } from '../components/ui/skeleton';
 import { Button } from '../components/ui/button';
 import { ExternalLink } from 'lucide-react';
@@ -22,6 +23,14 @@ export default function ProductBrowse() {
     if (selectedCategory === 'All') return products;
     return products.filter((p) => p.category === selectedCategory);
   }, [products, selectedCategory]);
+
+  // Swipeable gallery images
+  const swipeableImages = [
+    '/assets/IMG_20260223_160209-5.jpg',
+    '/assets/ms_fr1ch_512_563768314-8.jpg',
+  ];
+
+  const meeshoUrl = 'https://www.meesho.com/af_invite/234223027:youtube_long_form:2000433?p_id=563768316&ext_id=9bnif0&utm_source=youtube_long_form';
 
   if (error) {
     return (
@@ -51,6 +60,13 @@ export default function ProductBrowse() {
               Discover unique pieces inspired by the latest trends on Pinterest
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Swipeable Gallery Section */}
+      <div className="bg-accent/20 py-12">
+        <div className="container mx-auto px-4">
+          <SwipeableGallery images={swipeableImages} meeshoUrl={meeshoUrl} />
         </div>
       </div>
 
@@ -100,14 +116,10 @@ export default function ProductBrowse() {
         </div>
       </div>
 
-      {/* Category Image Section */}
-      <CategoryImageSection />
-
-      {/* Products Section */}
-      <div className="container mx-auto px-4 py-12">
-        {/* Category Filter */}
+      {/* Category Filter - Now positioned above Category Image Section */}
+      <div className="container mx-auto px-4 pt-12 pb-6">
         {!isLoading && categories.length > 0 && (
-          <div className="mb-8">
+          <div>
             <h2 className="text-sm font-medium text-muted-foreground mb-4">Filter by Category</h2>
             <CategoryFilter
               categories={categories}
@@ -116,7 +128,10 @@ export default function ProductBrowse() {
             />
           </div>
         )}
+      </div>
 
+      {/* Products Section */}
+      <div className="container mx-auto px-4 py-12">
         {/* Products Grid */}
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -142,6 +157,9 @@ export default function ProductBrowse() {
           </div>
         )}
       </div>
+
+      {/* Category Image Section - Now positioned at the bottom */}
+      <CategoryImageSection />
     </div>
   );
 }

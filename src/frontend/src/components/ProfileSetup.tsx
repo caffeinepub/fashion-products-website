@@ -20,7 +20,7 @@ export default function ProfileSetup() {
     <Dialog open={true}>
       <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Welcome to Fashion Pin</DialogTitle>
+          <DialogTitle>Welcome to Fashion Forum</DialogTitle>
           <DialogDescription>Please tell us your name to get started.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">

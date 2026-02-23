@@ -1,162 +1,38 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
-  "summary": "Fashion products website with Pinterest integration",
-  "architectural_notes": [
-    "Website for displaying fashion products",
-    "Pinterest API integration required",
-    "Category-based product navigation with expandable sections"
-  ],
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-implement-product-browsing-interface-displaying-fashion-products-in-a-grid-layout-with-product-images-names-prices-and-categories",
-      "title": "Implement product browsing interface displaying fashion products in a grid layout with product images, names, prices, and categories",
+      "id": "feature-update-all-occurrences-of-fashion-pin-to-fashion-forum-in-the-application-header-branding-within-the-layout-component",
+      "title": "Update all occurrences of 'Fashion Pin' to 'Fashion Forum' in the application header/branding within the Layout component",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-html-document-title-from-fashion-pin-to-fashion-forum-in-frontend-index-html",
+      "title": "Update the HTML document title from 'Fashion Pin' to 'Fashion Forum' in frontend/index.html",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-pinterest-integration-allowing-users-to-link-products-to-pinterest-pins-by-storing-pinterest-pin-urls-or-ids-with-each-product",
-      "title": "Add Pinterest integration allowing users to link products to Pinterest pins by storing Pinterest pin URLs or IDs with each product",
+      "id": "feature-replace-any-remaining-fashion-pin-text-references-with-fashion-forum-throughout-the-frontend-codebase-including-comments-and-metadata",
+      "title": "Replace any remaining 'Fashion Pin' text references with 'Fashion Forum' throughout the frontend codebase, including comments and metadata",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-create-product-detail-view-showing-full-product-information-including-name-description-price-category-large-product-image-and-pinterest-pin-link",
-      "title": "Create product detail view showing full product information including name, description, price, category, large product image, and Pinterest pin link",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-admin-interface-for-authenticated-users-to-add-edit-and-delete-fashion-products-with-form-validation",
-      "title": "Implement admin interface for authenticated users to add, edit, and delete fashion products with form validation",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-category-filtering-to-allow-users-to-browse-products-by-fashion-category-e-g-dresses-shoes-accessories",
-      "title": "Add category filtering to allow users to browse products by fashion category (e.g., dresses, shoes, accessories)",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-design-a-cohesive-visual-theme-inspired-by-fashion-e-commerce-aesthetics-with-elegant-typography-a-sophisticated-color-palette-avoiding-blue-and-purple-clean-whitespace-and-modern-layout-patterns-that-emphasize-product-imagery",
-      "title": "Design a cohesive visual theme inspired by fashion e-commerce aesthetics with elegant typography, a sophisticated color palette (avoiding blue and purple), clean whitespace, and modern layout patterns that emphasize product imagery",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-the-uploaded-image-ms-df88y-512-388205135-jpg-to-the-product-browsing-page-below-the-hero-banner-section",
-      "title": "Add the uploaded image 'ms_df88y_512_388205135.jpg' to the product browsing page below the hero banner section",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-clickable-look-out-button-below-the-image-that-redirects-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-youtube-long-form-1998242-p-id-388205135-ext-id-6f4kzz-utm-source-youtube-long-form",
-      "title": "Add a clickable 'Look Out' button below the image that redirects to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:youtube_long_form:1998242?p_id=388205135&ext_id=6f4kzz&utm_source=youtube_long_form",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-the-uploaded-image-ms-9wecb-512-690945320-jpg-to-the-product-browsing-page-positioned-on-the-right-side-below-the-existing-promotional-section",
-      "title": "Add the uploaded image 'ms_9wecb_512_690945320.jpg' to the product browsing page, positioned on the right side below the existing promotional section",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-look-out-button-below-the-newly-added-image-that-redirects-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-youtube-long-form-1998930-p-id-690945320-ext-id-bfdctk-utm-source-youtube-long-form-when-clicked",
-      "title": "Add a 'Look Out' button below the newly added image that redirects to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:youtube_long_form:1998930?p_id=690945320&ext_id=bfdctk&utm_source=youtube_long_form when clicked",
-      "reqIds": [
-        "REQ-11"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-the-uploaded-images-1771838406102-png-1771838406102-1-png-1771838406102-2-png-1771838406102-3-png-1771838406102-4-png-1771838406102-5-png-1771838406102-6-png-1771838406102-7-png-to-the-product-browsing-page-positioned-below-the-existing-promotional-sections",
-      "title": "Add the uploaded images (1771838406102.png, 1771838406102-1.png, 1771838406102-2.png, 1771838406102-3.png, 1771838406102-4.png, 1771838406102-5.png, 1771838406102-6.png, 1771838406102-7.png) to the product browsing page positioned below the existing promotional sections",
-      "reqIds": [
-        "REQ-12"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-category-section-where-clicking-on-the-first-uploaded-image-1771838406102-png-reveals-the-remaining-product-images-1771838406102-1-png-through-1771838406102-7-png-underneath",
-      "title": "Create a category section where clicking on the first uploaded image (1771838406102.png) reveals the remaining product images (1771838406102-1.png through 1771838406102-7.png) underneath",
-      "reqIds": [
-        "REQ-13"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-render-the-uploaded-product-images-1771838406102-png-through-1771838406102-7-png-as-static-assets-from-frontend-public-assets-uploaded-directory",
-      "title": "Render the uploaded product images (1771838406102.png through 1771838406102-7.png) as static assets from frontend/public/assets/uploaded directory",
-      "reqIds": [
-        "REQ-14"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Create fashion products website",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Integrate with Pinterest",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Create a product catalog backend with CRUD operations for fashion products including fields: name, description, price, category, image URL, and Pinterest pin ID",
-      "reqIds": [
-        "REQ-1"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Add a photo with clickable lookout button that links to Meesho affiliate URL",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Add image on right with lookout icon below it that redirects to Meesho affiliate URL (product ID 690945320)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Add clickable category feature where clicking an image displays related product images underneath",
-      "reqIds": [],
-      "status": "pending"
-    }
-  ],
-  "gameProjectType": "none",
-  "projectName": "Fashion Products Website",
+  "new_feature_requests": [],
+  "projectName": "Fashion Forum",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

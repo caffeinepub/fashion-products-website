@@ -1,68 +1,64 @@
 {
   "kind": "build_request",
-  "title": "Add clickable category section with uploaded product images",
+  "title": "Rename application from Fashion Pin to Fashion Forum",
+  "projectName": "Fashion Forum",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-12",
-      "text": "Add the uploaded images (1771838406102.png, 1771838406102-1.png, 1771838406102-2.png, 1771838406102-3.png, 1771838406102-4.png, 1771838406102-5.png, 1771838406102-6.png, 1771838406102-7.png) to the product browsing page positioned below the existing promotional sections",
+      "id": "REQ-1",
+      "text": "Update all occurrences of 'Fashion Pin' to 'Fashion Forum' in the application header/branding within the Layout component",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All 8 uploaded images are displayed on the ProductBrowse page",
-        "Images are positioned below the two existing Meesho promotional sections",
-        "Images maintain consistent styling with the existing page design"
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Create a category section where clicking on the first uploaded image (1771838406102.png) reveals the remaining product images (1771838406102-1.png through 1771838406102-7.png) underneath",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-last"
+          "msg-user-final"
         ],
         "quotes": [
-          "I just want catogery under it on clicking on this image comes that products"
+          "Change name from fashion pin to fashion forum"
         ]
       },
       "acceptanceCriteria": [
-        "The first image (1771838406102.png) acts as a category thumbnail/trigger",
-        "Clicking the first image toggles the visibility of the remaining 7 product images",
-        "Product images display in a grid layout underneath the clicked category image",
-        "The interaction provides visual feedback (hover states, active states)"
+        "Application name displays as 'Fashion Forum' in the header",
+        "No references to 'Fashion Pin' remain visible in the UI"
       ]
     },
     {
-      "id": "REQ-14",
-      "text": "Render the uploaded product images (1771838406102.png through 1771838406102-7.png) as static assets from frontend/public/assets/uploaded directory",
+      "id": "REQ-2",
+      "text": "Update the HTML document title from 'Fashion Pin' to 'Fashion Forum' in frontend/index.html",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-user-final"
+        ],
+        "quotes": [
+          "Change name from fashion pin to fashion forum"
         ]
       },
       "acceptanceCriteria": [
-        "All 8 uploaded images are accessible from frontend/public/assets/uploaded/",
-        "Images load correctly without backend routing",
-        "Image paths are properly referenced in the ProductBrowse component"
+        "Browser tab displays 'Fashion Forum' as the page title"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Replace any remaining 'Fashion Pin' text references with 'Fashion Forum' throughout the frontend codebase, including comments and metadata",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-final"
+        ],
+        "quotes": [
+          "Change name from fashion pin to fashion forum"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All user-facing and code references use 'Fashion Forum' consistently"
       ]
     }
   ],
-  "constraints": [
-    "Do not modify the existing promotional sections with Meesho affiliate links",
-    "Maintain the existing category filtering functionality",
-    "Keep the interaction pattern simple and intuitive"
-  ],
+  "constraints": [],
   "nonGoals": [
-    "Adding new products to the backend database",
-    "Modifying the admin interface",
-    "Creating new category types in the backend",
-    "Adding affiliate links to these specific images"
+    "Changing the visual design or styling of the application",
+    "Modifying backend data models or API endpoints",
+    "Altering functionality beyond the name change"
   ],
   "imageRequirements": {
     "required": [],

@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <ShoppingBag className="h-6 w-6" />
               </div>
               <div>
-                <h1 className="text-2xl font-serif font-bold tracking-tight">Fashion Pin</h1>
+                <h1 className="text-2xl font-serif font-bold tracking-tight">Fashion Forum</h1>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
                   Curated Style <SiPinterest className="h-3 w-3" />
                 </p>
@@ -87,7 +87,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Fashion Pin. All rights reserved.
+              © {new Date().getFullYear()} Fashion Forum. All rights reserved.
             </div>
             <div className="text-sm text-muted-foreground">
               Built with ❤️ using{' '}
