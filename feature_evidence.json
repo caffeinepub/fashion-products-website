@@ -1,0 +1,26 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-investigate-and-fix-the-deployment-error-that-occurred-in-version-21-production-deployment",
+      "featureTitle": "Investigate and fix the deployment error that occurred in Version 21 production deployment",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

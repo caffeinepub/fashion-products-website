@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-investigate-and-fix-the-deployment-error-that-occurred-in-version-21-production-deployment",
+      "title": "Investigate and fix the deployment error that occurred in Version 21 production deployment",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [],
+  "projectName": "Resolve deployment error",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
