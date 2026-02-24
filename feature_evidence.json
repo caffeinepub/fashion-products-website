@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-investigate-and-fix-the-deployment-error-that-occurred-in-version-21-production-deployment",
-      "featureTitle": "Investigate and fix the deployment error that occurred in Version 21 production deployment",
+      "featureId": "feature-regenerate-and-reload-the-attack-on-titan-t-shirt-image-used-in-the-attackontitangallery-component-to-refresh-the-static-asset-with-an-updated-version",
+      "featureTitle": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/hooks/useQueries.ts"
+        "frontend/src/components/AttackOnTitanGallery.tsx"
       ],
       "components": [
         "authorization@4.0.0",

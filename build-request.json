@@ -1,35 +1,36 @@
 {
   "kind": "build_request",
-  "title": "Resolve deployment error",
-  "priority": "high",
+  "title": "Reload Attack on Titan gallery image",
+  "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Investigate and fix the deployment error that occurred in Version 21 production deployment",
-      "target": "unknown",
+      "text": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-resolve-error"
+          "msg-4"
+        ],
+        "quotes": [
+          "Reload attack on titan image"
         ]
       },
       "acceptanceCriteria": [
-        "Deployment completes successfully without errors",
-        "Application is accessible in production environment",
-        "All existing features remain functional after deployment"
+        "The Attack on Titan gallery image is visibly updated/refreshed in the AttackOnTitanGallery component",
+        "The image loads correctly without errors in the gallery",
+        "Existing gallery navigation (arrows, thumbnails) continues to function as before"
       ]
     }
   ],
-  "constraints": [
-    "Must maintain all existing functionality during error resolution",
-    "Do not modify core authentication or access control logic"
-  ],
+  "constraints": [],
   "nonGoals": [
-    "Adding new features",
-    "Refactoring unrelated code",
-    "Changing existing UI design"
+    "Modifying the AttackOnTitanGallery component logic or swipe behavior",
+    "Changing any other product images or gallery components"
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Attack on Titan anime graphic T-shirt product photo showing bold red and dark graphic design with Survey Corps wings motif on a clean background (attack-on-titan-shirt.dim_800x1000.png)"
+    ],
     "edits": []
   }
 }

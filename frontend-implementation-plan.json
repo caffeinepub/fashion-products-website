@@ -1,56 +1,21 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Resolve deployment error",
+  "title": "Reload Attack on Titan gallery image",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Investigate and fix the deployment error that occurred in Version 21 production deployment",
+      "summary": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version",
       "acceptanceCriteria": [
-        "Deployment completes successfully without errors",
-        "Application is accessible in production environment",
-        "All existing features remain functional after deployment"
+        "The Attack on Titan gallery image is visibly updated/refreshed in the AttackOnTitanGallery component",
+        "The image loads correctly without errors in the gallery",
+        "Existing gallery navigation (arrows, thumbnails) continues to function as before"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/AttackOnTitanGallery.tsx",
           "operation": "modify",
-          "description": "Review and fix potential routing configuration issues that may cause deployment failures. Ensure all route imports are correctly resolved and that lazy loading is properly configured. Verify the ProfileSetup modal logic handles edge cases during initial load without causing hydration or initialization errors."
-        },
-        {
-          "path": "frontend/src/hooks/useActor.ts",
-          "operation": "modify",
-          "description": "Review actor initialization logic for production environment. Ensure that the authentication flow handles production canister IDs correctly and that the admin token initialization doesn't fail in production. Add proper error boundaries and fallback handling for actor creation failures that could cause deployment issues."
-        },
-        {
-          "path": "frontend/src/hooks/useInternetIdentity.ts",
-          "operation": "modify",
-          "description": "Verify Internet Identity configuration for production deployment. Ensure the AuthClient initialization uses correct production URLs and that delegation chain validation doesn't cause initialization failures. Check for any hardcoded development URLs that need to be environment-aware."
-        },
-        {
-          "path": "frontend/src/pages/ProductBrowse.tsx",
-          "operation": "modify",
-          "description": "Review image loading and asset references to ensure all image paths resolve correctly in production. Verify that the Meesho affiliate links and external image references don't cause loading failures. Ensure the swipeable galleries handle missing or failed image loads gracefully without breaking the page."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Review navigation and routing links to ensure they work correctly in production environment. Verify that the admin link conditional rendering doesn't cause hydration mismatches. Ensure the layout component handles authentication state changes without causing rendering errors."
-        },
-        {
-          "path": "frontend/src/pages/AdminProducts.tsx",
-          "operation": "modify",
-          "description": "Review admin page access control to ensure it doesn't cause authorization failures during deployment. Verify that the admin check query handles loading states properly and doesn't cause the page to fail when backend is initializing. Ensure CRUD operations have proper error handling for production environment."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Review all React Query hooks for proper error handling and retry logic that works in production. Ensure query keys are consistent and that cache invalidation logic doesn't cause infinite loops or failed mutations. Add production-appropriate error messages and fallback behavior."
-        },
-        {
-          "path": "frontend/src/main.tsx",
-          "operation": "modify",
-          "description": "Review application entry point for production build configuration. Ensure QueryClient settings are production-appropriate and that the InternetIdentityProvider initialization doesn't fail during deployment. Verify that the root rendering logic handles production environment correctly."
+          "description": "Update the image reference to use the newly generated Attack on Titan T-shirt image at frontend/public/assets/generated/attack-on-titan-shirt.dim_800x1000.png. Replace the existing image path in the component's image array with this workspace file path to display the refreshed static asset. Ensure the image loads correctly with existing loading states and maintains compatibility with the swipeable gallery navigation (arrows, thumbnails)."
         }
       ]
     }

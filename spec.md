@@ -1,12 +1,9 @@
 # Specification
 
 ## Summary
-**Goal:** Resolve the deployment error that occurred in Version 21 production deployment.
+**Goal:** Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component.
 
 **Planned changes:**
-- Investigate and fix the deployment error from Version 21
-- Ensure deployment completes successfully
-- Verify application accessibility in production
-- Confirm all existing features remain functional
+- Replace the existing Attack on Titan gallery image with a newly generated version
 
-**User-visible outcome:** The application deploys successfully to production without errors and all features work as expected.
+**User-visible outcome:** The Attack on Titan T-shirt image in the gallery is visibly refreshed and loads correctly, while gallery navigation remains unchanged.
