@@ -7,7 +7,7 @@
   "frontend/src/components/CategoryFilter.tsx": "Category filter component with button group for filtering products by category or showing all products.",
   "frontend/src/components/ProductForm.tsx": "Form component for creating and editing products with validation using React Hook Form, supporting all product fields including Pinterest pin ID.",
   "frontend/src/components/AccessDeniedScreen.tsx": "Access denied screen shown to non-admin users attempting to access admin-only pages.",
-  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with improved loading state handling that checks both isLoading and isPending states from useGetAllProducts to ensure proper data display and prevent infinite loading.",
+  "frontend/src/pages/ProductBrowse.tsx": "Main product browsing page with hero section, multiple promotional sections including the new Attack on Titan Gallery, swipeable galleries, watch products, category filters, and product grid with loading states and error handling.",
   "frontend/src/pages/ProductDetail.tsx": "Product detail page with integrated image loading state using useImageLoader hook, showing skeleton loader during image fetch and reduced timeout threshold for better responsiveness.",
   "frontend/src/pages/AdminProducts.tsx": "Admin dashboard for managing products with LoadingTimeout components (15s timeout) for async operations, combined loading state handling for actor and admin check, loading indicators on mutation buttons, proper disabled states during operations, and correct mode prop ('create' or 'edit') passed to ProductForm component.",
   "frontend/src/index.css": "Global styles with custom OKLCH color system using warm neutrals and earth tones, Playfair Display serif font for headings, and Inter for body text.",
@@ -21,5 +21,6 @@
   "frontend/src/components/LoadingTimeout.tsx": "Loading timeout component with improved timer cleanup logic that properly resets timeout state when loading completes, preventing false timeout alerts.",
   "frontend/src/components/WatchProductSection.tsx": "Watch product carousel component with individual image loading states, skeleton loaders, and error handling for each watch image in the carousel.",
   "frontend/src/hooks/useImageLoader.ts": "Custom React hook for managing image loading states with automatic retry logic, error handling, and fallback image support for consistent image loading behavior across all components.",
-  "frontend/src/components/MeeshoProductSection.tsx": "New component that displays the Demon Slayer t-shirt product image (ms_dxrpu_512_613389026.jpg) as a clickable link that redirects to the Meesho affiliate URL with hover effects and loading states using the useImageLoader hook."
+  "frontend/src/components/MeeshoProductSection.tsx": "New component that displays the Demon Slayer t-shirt product image (ms_dxrpu_512_613389026.jpg) as a clickable link that redirects to the Meesho affiliate URL with hover effects and loading states using the useImageLoader hook.",
+  "frontend/src/components/AttackOnTitanGallery.tsx": "Swipeable gallery component specifically for the two Attack on Titan t-shirt images with touch and mouse gesture support, image loading states, navigation arrows, thumbnail indicators, and a Lookout button that redirects to the Meesho affiliate URL."
 }

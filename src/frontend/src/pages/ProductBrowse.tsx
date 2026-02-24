@@ -7,6 +7,7 @@ import CategoryImageSection from '../components/CategoryImageSection';
 import SwipeableGallery from '../components/SwipeableGallery';
 import WatchProductSection from '../components/WatchProductSection';
 import MeeshoProductSection from '../components/MeeshoProductSection';
+import AttackOnTitanGallery from '../components/AttackOnTitanGallery';
 import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { ExternalLink, Loader2 } from 'lucide-react';
@@ -66,6 +67,7 @@ export default function ProductBrowse() {
   ];
 
   const meeshoUrl = 'https://www.meesho.com/af_invite/234223027:youtube_long_form:2000433?p_id=563768316&ext_id=9bnif0&utm_source=youtube_long_form';
+  const attackOnTitanUrl = 'https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=418433257&ext_id=6x4h61&utm_source=instagram_stories';
 
   if (error) {
     return (
@@ -105,6 +107,16 @@ export default function ProductBrowse() {
       <div className="bg-accent/20 py-12">
         <div className="container mx-auto px-4">
           <SwipeableGallery images={swipeableImages} meeshoUrl={meeshoUrl} />
+        </div>
+      </div>
+
+      {/* Attack on Titan Gallery Section */}
+      <div className="bg-background py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-8">
+            Featured: Attack on Titan Collection
+          </h2>
+          <AttackOnTitanGallery meeshoUrl={attackOnTitanUrl} />
         </div>
       </div>
 

@@ -1,83 +1,89 @@
 {
   "kind": "build_request",
-  "title": "Resolve loading issue",
-  "priority": "high",
+  "title": "Add swipeable product photos with Lookout button linking to Meesho",
+  "projectName": "Fashion Forum",
+  "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Investigate and fix the loading issue preventing the application from loading properly. Check for infinite loading states, failed queries, or component mounting problems in ProductBrowse.tsx, SwipeableGallery.tsx, and related data-fetching hooks.",
-      "target": "both",
+      "text": "Add the two uploaded product images (ms_qjphs_512_418433256.jpg and ms_cblw2_512_418433257.jpg) to the app as static assets in frontend/public/assets/generated",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-latest"
         ],
         "quotes": [
-          "Resolve the loading issue"
+          "Add this photo on swiping one comes other below it"
         ]
       },
       "acceptanceCriteria": [
-        "The application loads successfully without hanging on loading states",
-        "All product data fetches complete within reasonable timeframes",
-        "Loading spinners disappear once data is available",
-        "Error boundaries handle any loading failures gracefully"
+        "Both uploaded images are saved in frontend/public/assets/generated",
+        "Images are accessible via relative paths from the frontend"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Review and optimize the useQueries hooks for product fetching to ensure queries are not stuck in pending states or causing re-render loops.",
+      "text": "Implement a swipeable photo interface where swiping transitions between the two Attack on Titan t-shirt product photos with one appearing below the other in a stacked layout",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-latest"
+        ],
+        "quotes": [
+          "on swiping one comes other below it"
         ]
       },
       "acceptanceCriteria": [
-        "React Query hooks properly handle loading, error, and success states",
-        "No infinite re-fetching or query loops occur",
-        "Query invalidation logic does not cause cascading re-renders"
+        "Photos are displayed in a stacked vertical arrangement",
+        "Swiping left/right or up/down transitions between the two photos",
+        "Swipe gestures work on both touch and mouse interactions",
+        "Visual feedback indicates which photo is currently active"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Verify the LoadingTimeout component is properly configured and triggers timeout alerts if backend queries exceed reasonable durations.",
+      "text": "Add a 'Lookout' button to the swipeable photo interface that redirects users to the Meesho affiliate link: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=418433257&ext_id=6x4h61&utm_source=instagram_stories",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-latest"
+        ],
+        "quotes": [
+          "add lookout button on clicking it redirect into https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=418433257&ext_id=6x4h61&utm_source=instagram_stories"
         ]
       },
       "acceptanceCriteria": [
-        "LoadingTimeout displays after the configured timeout period if loading persists",
-        "Users are presented with a retry option when timeouts occur",
-        "Loading states resolve correctly after successful retries"
+        "A 'Lookout' button is visible on or near the swipeable photo interface",
+        "Clicking the button opens the exact Meesho affiliate URL in a new tab",
+        "Button has clear, accessible styling consistent with the app design",
+        "URL parameters are preserved exactly as provided"
       ]
     },
     {
       "id": "REQ-4",
-      "text": "Check backend actor initialization in useActor.ts to ensure the actor is being created successfully and not causing frontend queries to hang.",
-      "target": "both",
+      "text": "Integrate the new swipeable photo interface into an appropriate location in the app, either as a new section on the ProductBrowse page or as a standalone route",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-latest"
         ]
       },
       "acceptanceCriteria": [
-        "The backend actor initializes correctly for both authenticated and anonymous users",
-        "Actor creation failures are properly caught and reported",
-        "Dependent queries only execute after the actor is ready"
+        "The swipeable interface is accessible to users through the app navigation or prominent placement",
+        "Integration follows existing layout patterns and styling",
+        "Loading states are handled appropriately for the product images"
       ]
     }
   ],
   "constraints": [
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts",
-    "Do not modify frontend/src/hooks/useActor.ts",
-    "Do not modify frontend/src/main.tsx",
-    "Preserve existing React Query configuration"
+    "Must preserve the exact Meesho affiliate URL with all query parameters",
+    "Use existing SwipeableGallery or useSwipeGesture patterns from the codebase",
+    "Follow the established design system with warm neutral palette"
   ],
   "nonGoals": [
-    "Redesigning the loading UI",
-    "Adding new features unrelated to the loading issue",
-    "Changing the authentication flow"
+    "Modifying backend data models or adding product storage",
+    "Creating a full product management system for these specific photos",
+    "Implementing user-generated content upload features"
   ],
   "imageRequirements": {
     "required": [],
