@@ -1,13 +1,47 @@
 import { useState, useMemo } from 'react';
 import { useGetAllProducts } from '../hooks/useQueries';
+import { useImageLoader } from '../hooks/useImageLoader';
 import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
 import CategoryImageSection from '../components/CategoryImageSection';
 import SwipeableGallery from '../components/SwipeableGallery';
 import WatchProductSection from '../components/WatchProductSection';
+import MeeshoProductSection from '../components/MeeshoProductSection';
 import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Loader2 } from 'lucide-react';
+
+function PromotionalImage({ src, alt, meeshoUrl }: { src: string; alt: string; meeshoUrl: string }) {
+  const { imageSrc, isLoading } = useImageLoader({ src });
+
+  return (
+    <div className="max-w-2xl mx-auto text-center">
+      <div className="relative overflow-hidden rounded-lg shadow-lg mb-6">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-muted">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        )}
+        <img
+          src={imageSrc}
+          alt={alt}
+          className={`w-full h-auto object-cover transition-opacity duration-300 ${
+            isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+          loading="lazy"
+        />
+      </div>
+      <Button
+        size="lg"
+        className="font-semibold text-lg px-8 py-6 shadow-md hover:shadow-lg transition-all"
+        onClick={() => window.open(meeshoUrl, '_blank', 'noopener,noreferrer')}
+      >
+        Look Out
+        <ExternalLink className="ml-2 h-5 w-5" />
+      </Button>
+    </div>
+  );
+}
 
 export default function ProductBrowse() {
   const { data: products, isLoading, error, refetch } = useGetAllProducts();
@@ -80,46 +114,22 @@ export default function ProductBrowse() {
       {/* Promotional Section */}
       <div className="bg-accent/30 py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="relative overflow-hidden rounded-lg shadow-lg mb-6">
-              <img
-                src="/assets/ms_df88y_512_388205135.jpg"
-                alt="Featured Fashion"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            <Button
-              size="lg"
-              className="font-semibold text-lg px-8 py-6 shadow-md hover:shadow-lg transition-all"
-              onClick={() => window.open('https://www.meesho.com/af_invite/234223027:youtube_long_form:1998242?p_id=388205135&ext_id=6f4kzz&utm_source=youtube_long_form', '_blank', 'noopener,noreferrer')}
-            >
-              Look Out
-              <ExternalLink className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
+          <PromotionalImage
+            src="/assets/ms_df88y_512_388205135.jpg"
+            alt="Featured Fashion"
+            meeshoUrl="https://www.meesho.com/af_invite/234223027:youtube_long_form:1998242?p_id=388205135&ext_id=6f4kzz&utm_source=youtube_long_form"
+          />
         </div>
       </div>
 
       {/* Second Promotional Section */}
       <div className="bg-background py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="relative overflow-hidden rounded-lg shadow-lg mb-6">
-              <img
-                src="/assets/ms_9wecb_512_690945320.jpg"
-                alt="Featured Fashion Item"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            <Button
-              size="lg"
-              className="font-semibold text-lg px-8 py-6 shadow-md hover:shadow-lg transition-all"
-              onClick={() => window.open('https://www.meesho.com/af_invite/234223027:youtube_long_form:1998930?p_id=690945320&ext_id=bfdctk&utm_source=youtube_long_form', '_blank', 'noopener,noreferrer')}
-            >
-              Look Out
-              <ExternalLink className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
+          <PromotionalImage
+            src="/assets/ms_9wecb_512_690945320.jpg"
+            alt="Featured Fashion Item"
+            meeshoUrl="https://www.meesho.com/af_invite/234223027:youtube_long_form:1998930?p_id=690945320&ext_id=bfdctk&utm_source=youtube_long_form"
+          />
         </div>
       </div>
 
@@ -143,7 +153,7 @@ export default function ProductBrowse() {
         {isLoading ? (
           <LoadingTimeout
             isLoading={isLoading}
-            timeout={15000}
+            timeout={10000}
             onRetry={() => refetch()}
             loadingMessage="Loading products..."
             timeoutMessage="Products are taking longer than expected to load"
@@ -165,6 +175,9 @@ export default function ProductBrowse() {
 
       {/* Category Image Section - Now positioned at the bottom */}
       <CategoryImageSection />
+
+      {/* Meesho Product Section - New clickable product image */}
+      <MeeshoProductSection />
     </div>
   );
 }

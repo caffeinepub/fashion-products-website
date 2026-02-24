@@ -3,7 +3,8 @@ import type { Product } from '../backend';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { SiPinterest } from 'react-icons/si';
-import { ExternalLink } from 'lucide-react';
+import { useImageLoader } from '../hooks/useImageLoader';
+import { Skeleton } from './ui/skeleton';
 
 interface ProductCardProps {
   product: Product;
@@ -12,17 +13,32 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const imageUrl = product.imageUrl || '/assets/generated/placeholder-product.dim_400x600.png';
   const hasPinterestPin = product.pinterestPinId && product.pinterestPinId.trim() !== '';
+  
+  const { imageSrc, isLoading, hasError } = useImageLoader({ src: imageUrl });
 
   return (
     <Card className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300">
       <Link to="/product/$id" params={{ id: product.id.toString() }} className="block">
         <div className="relative aspect-[2/3] overflow-hidden bg-muted">
+          {isLoading && (
+            <div className="absolute inset-0">
+              <Skeleton className="w-full h-full" />
+            </div>
+          )}
           <img
-            src={imageUrl}
+            src={imageSrc}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              isLoading ? 'opacity-0' : 'opacity-100 group-hover:scale-105'
+            }`}
+            loading="lazy"
           />
-          {hasPinterestPin && (
+          {hasError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted text-muted-foreground text-sm">
+              Image unavailable
+            </div>
+          )}
+          {hasPinterestPin && !isLoading && (
             <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm p-2 rounded-full shadow-md">
               <SiPinterest className="h-4 w-4 text-destructive" />
             </div>

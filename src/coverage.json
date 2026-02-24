@@ -1,74 +1,48 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T15:32:26.316Z",
+  "generatedAt": "2026-02-24T01:59:31.383Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
+    "total": 2,
     "implemented": 2,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Investigate and fix the loading timeout issue in the application. Check LoadingTimeout component usage, loading states in useQueries hooks, and network request handling to ensure proper error handling and loading state management.",
+        "summary": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts",
           "frontend/src/pages/ProductBrowse.tsx",
-          "frontend/src/pages/AdminProducts.tsx",
-          "frontend/src/pages/ProductDetail.tsx",
-          "frontend/src/components/LoadingTimeout.tsx"
+          "frontend/src/components/MeeshoProductSection.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts",
           "frontend/src/pages/ProductBrowse.tsx",
-          "frontend/src/pages/AdminProducts.tsx",
-          "frontend/src/pages/ProductDetail.tsx",
-          "frontend/src/components/LoadingTimeout.tsx"
+          "frontend/src/components/MeeshoProductSection.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Review and optimize backend actor initialization and authentication flow to prevent hanging requests during Internet Identity authentication or actor creation.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-3",
-        "summary": "Verify that all React Query hooks properly handle loading, error, and success states without causing indefinite loading conditions in ProductBrowse and AdminProducts pages.",
+        "summary": "Make the product image clickable and redirect to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories when clicked",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/ProductBrowse.tsx",
-          "frontend/src/pages/AdminProducts.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/components/MeeshoProductSection.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/ProductBrowse.tsx",
-          "frontend/src/pages/AdminProducts.tsx"
+          "frontend/src/components/MeeshoProductSection.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/LoadingTimeout.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/AdminProducts.tsx",
+    "frontend/src/components/MeeshoProductSection.tsx",
     "frontend/src/pages/ProductBrowse.tsx",
-    "frontend/src/pages/ProductDetail.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

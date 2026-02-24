@@ -1,66 +1,55 @@
 {
   "kind": "build_request",
-  "title": "Resolve loading timeout issue",
-  "priority": "high",
+  "title": "Add product image with clickable redirect to Meesho affiliate link",
+  "projectName": "Fashion Forum",
+  "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Investigate and fix the loading timeout issue in the application. Check LoadingTimeout component usage, loading states in useQueries hooks, and network request handling to ensure proper error handling and loading state management.",
-      "target": "both",
+      "text": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-user"
+        ],
+        "quotes": [
+          "Add image below it"
         ]
       },
       "acceptanceCriteria": [
-        "Loading states resolve properly without timeouts",
-        "Error states are properly handled and displayed to users",
-        "No infinite loading spinners occur during normal operation",
-        "Backend queries return responses within reasonable time"
+        "The uploaded t-shirt product image is displayed on the ProductBrowse page",
+        "The image appears below the existing SwipeableGallery and CategoryImageSection components",
+        "The image maintains proper aspect ratio and responsive sizing"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Review and optimize backend actor initialization and authentication flow to prevent hanging requests during Internet Identity authentication or actor creation.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Actor initialization completes successfully",
-        "Authentication flow does not cause hanging requests",
-        "Proper error handling for failed actor creation"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Verify that all React Query hooks properly handle loading, error, and success states without causing indefinite loading conditions in ProductBrowse and AdminProducts pages.",
+      "text": "Make the product image clickable and redirect to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories when clicked",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-user"
+        ],
+        "quotes": [
+          "add lookout options on clicking it redirect into https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories"
         ]
       },
       "acceptanceCriteria": [
-        "ProductBrowse page loads products without timeout",
-        "AdminProducts page loads admin data without timeout",
-        "Loading states transition properly to success or error states",
-        "LoadingTimeout component triggers retry mechanism when appropriate"
+        "Clicking the product image opens the Meesho affiliate link in a new tab",
+        "The full URL with all query parameters is preserved in the redirect",
+        "Visual affordance (hover effect or cursor change) indicates the image is clickable"
       ]
     }
   ],
   "constraints": [
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts",
-    "Do not modify frontend/src/hooks/useActor.ts",
-    "Do not modify frontend/src/main.tsx",
-    "Preserve existing LoadingTimeout component functionality"
+    "Use the exact uploaded image filename: ms_dxrpu_512_613389026.jpg",
+    "Preserve the complete Meesho affiliate URL with all query parameters",
+    "Follow existing image loading patterns using useImageLoader hook and LoadingTimeout component"
   ],
   "nonGoals": [
-    "Redesigning the loading UI appearance",
-    "Adding new loading animation styles",
-    "Changing the timeout duration configuration"
+    "Creating a new backend product entry for this image",
+    "Modifying the existing SwipeableGallery or WatchProductSection components",
+    "Adding image editing or transformation features"
   ],
   "imageRequirements": {
     "required": [],

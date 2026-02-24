@@ -13,7 +13,7 @@ interface LoadingTimeoutProps {
 
 export default function LoadingTimeout({
   isLoading,
-  timeout = 15000,
+  timeout = 10000,
   onRetry,
   loadingMessage = 'Loading...',
   timeoutMessage = 'This is taking longer than expected',

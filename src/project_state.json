@@ -1,41 +1,37 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
+  "summary": "App with image and clickable redirect to Meesho affiliate link",
   "architectural_notes": [],
-  "known_issues": [
-    "Loading issue needs resolution"
-  ],
-  "isFixRequest": true,
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-investigate-and-fix-the-loading-timeout-issue-in-the-application-check-loadingtimeout-component-usage-loading-states-in-usequeries-hooks-and-network-request-handling-to-ensure-proper-error-handling-and-loading-state-management",
-      "title": "Investigate and fix the loading timeout issue in the application. Check LoadingTimeout component usage, loading states in useQueries hooks, and network request handling to ensure proper error handling and loading state management.",
+      "id": "feature-add-the-uploaded-product-image-ms-dxrpu-512-613389026-jpg-to-the-product-browsing-page-below-the-existing-content-sections",
+      "title": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-verify-that-all-react-query-hooks-properly-handle-loading-error-and-success-states-without-causing-indefinite-loading-conditions-in-productbrowse-and-adminproducts-pages",
-      "title": "Verify that all React Query hooks properly handle loading, error, and success states without causing indefinite loading conditions in ProductBrowse and AdminProducts pages.",
+      "id": "feature-make-the-product-image-clickable-and-redirect-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-instagram-stories-2007896-p-id-613389026-ext-id-a57202-utm-source-instagram-stories-when-clicked",
+      "title": "Make the product image clickable and redirect to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories when clicked",
       "reqIds": [
-        "REQ-3"
+        "REQ-2"
       ],
       "version": 1
     }
   ],
   "new_feature_requests": [
     {
-      "id": "AR-2",
-      "summary": "Review and optimize backend actor initialization and authentication flow to prevent hanging requests during Internet Identity authentication or actor creation.",
-      "reqIds": [
-        "REQ-2"
-      ],
+      "id": "AR-1",
+      "summary": "Add image with click redirect to Meesho affiliate URL",
+      "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Resolve loading timeout issue",
+  "projectName": "Fashion Forum",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

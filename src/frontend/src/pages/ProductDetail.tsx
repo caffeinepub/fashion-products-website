@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useGetProduct } from '../hooks/useQueries';
+import { useImageLoader } from '../hooks/useImageLoader';
 import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
+import { Skeleton } from '../components/ui/skeleton';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { SiPinterest } from 'react-icons/si';
 
@@ -11,13 +13,18 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const { data: product, isLoading, error, refetch } = useGetProduct(BigInt(id));
 
+  const imageUrl = product?.imageUrl || '/assets/generated/placeholder-product.dim_400x600.png';
+  const { imageSrc, isLoading: imageLoading } = useImageLoader({
+    src: imageUrl,
+  });
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           <LoadingTimeout
             isLoading={isLoading}
-            timeout={15000}
+            timeout={10000}
             onRetry={() => refetch()}
             loadingMessage="Loading product details..."
             timeoutMessage="Product details are taking longer than expected to load"
@@ -41,7 +48,6 @@ export default function ProductDetail() {
     );
   }
 
-  const imageUrl = product.imageUrl || '/assets/generated/placeholder-product.dim_400x600.png';
   const hasPinterestPin = product.pinterestPinId && product.pinterestPinId.trim() !== '';
   const pinterestUrl = hasPinterestPin
     ? product.pinterestPinId.startsWith('http')
@@ -60,7 +66,18 @@ export default function ProductDetail() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Product Image */}
           <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-muted">
-            <img src={imageUrl} alt={product.name} className="w-full h-full object-cover" />
+            {imageLoading && (
+              <div className="absolute inset-0">
+                <Skeleton className="w-full h-full" />
+              </div>
+            )}
+            <img
+              src={imageSrc}
+              alt={product.name}
+              className={`w-full h-full object-cover transition-opacity duration-300 ${
+                imageLoading ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
           </div>
 
           {/* Product Details */}

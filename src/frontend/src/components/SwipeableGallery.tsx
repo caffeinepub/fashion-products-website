@@ -1,11 +1,39 @@
 import { useState } from 'react';
 import { useSwipeGesture } from '../hooks/useSwipeGesture';
+import { useImageLoader } from '../hooks/useImageLoader';
 import { Button } from './ui/button';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, Loader2 } from 'lucide-react';
 
 interface SwipeableGalleryProps {
   images: string[];
   meeshoUrl: string;
+}
+
+function GalleryImage({ src, alt, isActive }: { src: string; alt: string; isActive: boolean }) {
+  const { imageSrc, isLoading, hasError } = useImageLoader({ src });
+
+  return (
+    <>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      )}
+      <img
+        src={imageSrc}
+        alt={alt}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${
+          isLoading ? 'opacity-0' : 'opacity-100'
+        }`}
+        draggable={false}
+      />
+      {hasError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted text-muted-foreground">
+          Image unavailable
+        </div>
+      )}
+    </>
+  );
 }
 
 export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGalleryProps) {
@@ -25,6 +53,10 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
     threshold: 50,
   });
 
+  const { imageSrc: promoImageSrc, isLoading: promoLoading } = useImageLoader({
+    src: '/assets/ms_swnvi_512_735387723.jpg',
+  });
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       {/* Gallery Container */}
@@ -40,11 +72,10 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
           onMouseUp={swipeHandlers.handleMouseUp}
           onMouseLeave={swipeHandlers.handleMouseLeave}
         >
-          <img
+          <GalleryImage
             src={images[currentIndex]}
             alt={`Product ${currentIndex + 1}`}
-            className="w-full h-full object-cover transition-opacity duration-300"
-            draggable={false}
+            isActive={true}
           />
 
           {/* Navigation Arrows */}
@@ -110,12 +141,20 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
           href="https://affiliate.meesho.com/collection/MjAwMTM3Nzo6Ojo6Om5vcm1hbA=="
           target="_blank"
           rel="noopener noreferrer"
-          className="block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] cursor-pointer"
+          className="block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] cursor-pointer relative"
         >
+          {promoLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          )}
           <img
-            src="/assets/ms_swnvi_512_735387723.jpg"
+            src={promoImageSrc}
             alt="Fashion collection - Wide leg pants and sneakers"
-            className="w-full h-auto object-cover"
+            className={`w-full h-auto object-cover transition-opacity duration-300 ${
+              promoLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+            loading="lazy"
           />
         </a>
       </div>
