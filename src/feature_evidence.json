@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-the-uploaded-product-image-ms-dxrpu-512-613389026-jpg-to-the-product-browsing-page-below-the-existing-content-sections",
-      "featureTitle": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
+      "featureId": "feature-investigate-and-fix-the-loading-issue-preventing-the-application-from-loading-properly-check-for-infinite-loading-states-failed-queries-or-component-mounting-problems-in-productbrowse-tsx-swipeablegallery-tsx-and-related-data-fetching-hooks",
+      "featureTitle": "Investigate and fix the loading issue preventing the application from loading properly. Check for infinite loading states, failed queries, or component mounting problems in ProductBrowse.tsx, SwipeableGallery.tsx, and related data-fetching hooks.",
       "files": [
-        "frontend/src/components/MeeshoProductSection.tsx",
+        "frontend/src/components/SwipeableGallery.tsx",
         "frontend/src/pages/ProductBrowse.tsx"
       ],
       "components": [
@@ -22,10 +22,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-make-the-product-image-clickable-and-redirect-to-the-meesho-affiliate-url-https-www-meesho-com-af-invite-234223027-instagram-stories-2007896-p-id-613389026-ext-id-a57202-utm-source-instagram-stories-when-clicked",
-      "featureTitle": "Make the product image clickable and redirect to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories when clicked",
+      "featureId": "feature-review-and-optimize-the-usequeries-hooks-for-product-fetching-to-ensure-queries-are-not-stuck-in-pending-states-or-causing-re-render-loops",
+      "featureTitle": "Review and optimize the useQueries hooks for product fetching to ensure queries are not stuck in pending states or causing re-render loops.",
       "files": [
-        "frontend/src/components/MeeshoProductSection.tsx"
+        "frontend/src/hooks/useQueries.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -37,6 +37,45 @@
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-verify-the-loadingtimeout-component-is-properly-configured-and-triggers-timeout-alerts-if-backend-queries-exceed-reasonable-durations",
+      "featureTitle": "Verify the LoadingTimeout component is properly configured and triggers timeout alerts if backend queries exceed reasonable durations.",
+      "files": [
+        "frontend/src/components/LoadingTimeout.tsx",
+        "frontend/src/pages/ProductBrowse.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-check-backend-actor-initialization-in-useactor-ts-to-ensure-the-actor-is-being-created-successfully-and-not-causing-frontend-queries-to-hang",
+      "featureTitle": "Check backend actor initialization in useActor.ts to ensure the actor is being created successfully and not causing frontend queries to hang.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
       ],
       "confidence": "high"
     }

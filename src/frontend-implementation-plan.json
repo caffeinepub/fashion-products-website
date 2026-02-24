@@ -1,42 +1,85 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add clickable product image with Meesho affiliate redirect",
+  "title": "Resolve Loading Issue - Frontend Fixes",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
+      "summary": "Fix loading states in ProductBrowse and SwipeableGallery to prevent infinite loading and ensure proper data display",
       "acceptanceCriteria": [
-        "The uploaded t-shirt product image is displayed on the ProductBrowse page",
-        "The image appears below the existing SwipeableGallery and CategoryImageSection components",
-        "The image maintains proper aspect ratio and responsive sizing"
+        "The application loads successfully without hanging on loading states",
+        "All product data fetches complete within reasonable timeframes",
+        "Loading spinners disappear once data is available",
+        "Error boundaries handle any loading failures gracefully"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/ProductBrowse.tsx",
           "operation": "modify",
-          "description": "Add a new MeeshoProductSection component below the CategoryImageSection that displays the uploaded product image (frontend/public/assets/ms_dxrpu_512_613389026.jpg) with responsive sizing and proper aspect ratio handling. Use the useImageLoader hook for loading states and LoadingTimeout component for error handling, following the same pattern as CategoryImageSection."
+          "description": "Fix the loading state logic by properly checking both isPending and isLoading states from useGetAllProducts. Ensure the loading condition accounts for actor initialization state. Add proper error state handling to display error messages when queries fail. Verify that the conditional rendering logic doesn't create orphaned loading states."
         },
         {
-          "path": "frontend/src/components/MeeshoProductSection.tsx",
-          "operation": "create",
-          "description": "Create a new component that displays the product image from frontend/public/assets/ms_dxrpu_512_613389026.jpg within a responsive container. Use the useImageLoader hook to manage image loading states and include LoadingTimeout component for timeout handling. Apply responsive classes for proper aspect ratio and sizing across different screen sizes."
+          "path": "frontend/src/components/SwipeableGallery.tsx",
+          "operation": "modify",
+          "description": "Review the loading state management and ensure the component properly handles empty product arrays and loading states. Add fallback behavior when images fail to load or when the products array is empty. Ensure the component doesn't attempt to render gallery controls when no products are available."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Make the product image clickable and redirect to the Meesho affiliate URL when clicked",
+      "summary": "Optimize useQueries hooks to prevent pending state loops and ensure proper query lifecycle management",
       "acceptanceCriteria": [
-        "Clicking the product image opens the Meesho affiliate link in a new tab",
-        "The full URL with all query parameters is preserved in the redirect",
-        "Visual affordance (hover effect or cursor change) indicates the image is clickable"
+        "React Query hooks properly handle loading, error, and success states",
+        "No infinite re-fetching or query loops occur",
+        "Query invalidation logic does not cause cascading re-renders"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/MeeshoProductSection.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Wrap the product image in a clickable anchor tag that opens the exact URL https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories in a new tab (target='_blank' with rel='noopener noreferrer'). Add hover effects (scale transform, cursor pointer) and an optional overlay or icon to indicate the image is clickable."
+          "description": "Review all query hooks (useGetAllProducts, useGetCallerUserProfile, useIsCallerAdmin) to ensure proper enabled conditions that prevent queries from firing before the actor is ready. Add explicit checks for actor availability in queryFn functions. Verify that the retry configuration is appropriate (currently retry: false) and consistent across all queries. Check mutation onSuccess callbacks to ensure they don't trigger unnecessary query invalidations that could cause re-render loops."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Verify LoadingTimeout component integration and ensure it triggers appropriately for long-running queries",
+      "acceptanceCriteria": [
+        "LoadingTimeout displays after the configured timeout period if loading persists",
+        "Users are presented with a retry option when timeouts occur",
+        "Loading states resolve correctly after successful retries"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoadingTimeout.tsx",
+          "operation": "modify",
+          "description": "Review the timeout logic to ensure the timer starts correctly when isLoading becomes true and cleans up properly. Verify the retry callback is properly wired to React Query's refetch mechanism. Consider adding a maximum retry limit to prevent infinite retry loops. Ensure the timeout alert message is clear and actionable for users."
+        },
+        {
+          "path": "frontend/src/pages/ProductBrowse.tsx",
+          "operation": "modify",
+          "description": "Verify LoadingTimeout is receiving the correct isLoading prop from useGetAllProducts query state and that the refetch callback is properly passed. Ensure the timeout duration (default 10 seconds) is appropriate for the expected backend response time."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Ensure actor-dependent queries only execute after actor initialization completes and handle actor creation failures gracefully",
+      "acceptanceCriteria": [
+        "The backend actor initializes correctly for both authenticated and anonymous users",
+        "Actor creation failures are properly caught and reported",
+        "Dependent queries only execute after the actor is ready"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Strengthen the enabled conditions in all query hooks to check both !!actor and !actorFetching before allowing queries to execute. Update useGetCallerUserProfile to follow the pattern shown in the authorization component usage instructions, explicitly returning isLoading: actorFetching || query.isLoading and isFetched: !!actor && query.isFetched to prevent premature query execution and modal flashing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Review the ProfileSetup modal display logic to ensure it properly waits for both actor initialization and profile query completion before determining whether to show the setup modal. Use the updated useGetCallerUserProfile hook states (actorFetching, isFetched) to prevent the modal from flashing on initial load. Ensure the showProfileSetup condition matches the pattern: isAuthenticated && !profileLoading && isFetched && userProfile === null."
         }
       ]
     }

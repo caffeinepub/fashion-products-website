@@ -47,58 +47,74 @@ export function useSaveCallerUserProfile() {
 }
 
 export function useGetAllProducts() {
-  const { actor, isFetching } = useActor();
+  const { actor, isFetching: actorFetching } = useActor();
 
-  return useQuery<Product[]>({
+  const query = useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
       const result = await actor.getAllProducts();
       return result || [];
     },
-    enabled: !!actor && !isFetching,
+    enabled: !!actor && !actorFetching,
     retry: 2,
     retryDelay: 1000,
     staleTime: 2 * 60 * 1000, // 2 minutes
     gcTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: false,
   });
+
+  return {
+    ...query,
+    isLoading: actorFetching || query.isLoading,
+    isPending: actorFetching || query.isPending,
+  };
 }
 
 export function useGetProduct(id: bigint) {
-  const { actor, isFetching } = useActor();
+  const { actor, isFetching: actorFetching } = useActor();
 
-  return useQuery<Product | null>({
+  const query = useQuery<Product | null>({
     queryKey: ['product', id.toString()],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
       return actor.getProduct(id);
     },
-    enabled: !!actor && !isFetching && id !== undefined,
+    enabled: !!actor && !actorFetching && id !== undefined,
     retry: 2,
     retryDelay: 1000,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
   });
+
+  return {
+    ...query,
+    isLoading: actorFetching || query.isLoading,
+  };
 }
 
 export function useIsCallerAdmin() {
-  const { actor, isFetching } = useActor();
+  const { actor, isFetching: actorFetching } = useActor();
 
-  return useQuery<boolean>({
+  const query = useQuery<boolean>({
     queryKey: ['isAdmin'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
       return actor.isCallerAdmin();
     },
-    enabled: !!actor && !isFetching,
+    enabled: !!actor && !actorFetching,
     retry: 2,
     retryDelay: 1000,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
   });
+
+  return {
+    ...query,
+    isLoading: actorFetching || query.isLoading,
+  };
 }
 
 export function useAddProduct() {

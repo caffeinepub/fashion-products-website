@@ -44,7 +44,7 @@ function PromotionalImage({ src, alt, meeshoUrl }: { src: string; alt: string; m
 }
 
 export default function ProductBrowse() {
-  const { data: products, isLoading, error, refetch } = useGetAllProducts();
+  const { data: products, isLoading, isPending, error, refetch } = useGetAllProducts();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = useMemo(() => {
@@ -108,6 +108,9 @@ export default function ProductBrowse() {
         </div>
       </div>
 
+      {/* Meesho Product Section - Now positioned above Watch Product Section */}
+      <MeeshoProductSection />
+
       {/* Watch Product Section */}
       <WatchProductSection />
 
@@ -135,7 +138,7 @@ export default function ProductBrowse() {
 
       {/* Category Filter - Now positioned above Category Image Section */}
       <div className="container mx-auto px-4 pt-12 pb-6">
-        {!isLoading && categories.length > 0 && (
+        {!isLoading && !isPending && categories.length > 0 && (
           <div>
             <h2 className="text-sm font-medium text-muted-foreground mb-4">Filter by Category</h2>
             <CategoryFilter
@@ -150,9 +153,9 @@ export default function ProductBrowse() {
       {/* Products Section */}
       <div className="container mx-auto px-4 py-12">
         {/* Products Grid */}
-        {isLoading ? (
+        {isLoading || isPending ? (
           <LoadingTimeout
-            isLoading={isLoading}
+            isLoading={isLoading || isPending}
             timeout={10000}
             onRetry={() => refetch()}
             loadingMessage="Loading products..."
@@ -175,9 +178,6 @@ export default function ProductBrowse() {
 
       {/* Category Image Section - Now positioned at the bottom */}
       <CategoryImageSection />
-
-      {/* Meesho Product Section - New clickable product image */}
-      <MeeshoProductSection />
     </div>
   );
 }

@@ -1,11 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Add a clickable product image that redirects to a Meesho affiliate link.
+**Goal:** Fix the application loading issue preventing proper initialization and data display.
 
 **Planned changes:**
-- Display the uploaded t-shirt product image (ms_dxrpu_512_613389026.jpg) on the ProductBrowse page below existing content
-- Make the image clickable to redirect users to the Meesho affiliate URL in a new tab
-- Add visual hover effects to indicate the image is clickable
+- Investigate and resolve infinite loading states in ProductBrowse.tsx and SwipeableGallery.tsx
+- Fix data-fetching hooks to prevent queries from hanging in pending states
+- Ensure LoadingTimeout component properly triggers and provides retry functionality
+- Verify backend actor initialization completes successfully before dependent queries execute
+- Optimize useQueries hooks to eliminate re-render loops and cascading query invalidations
 
-**User-visible outcome:** Users can view the Demon Slayer t-shirt product image on the browsing page and click it to be redirected to the Meesho product page for purchase.
+**User-visible outcome:** The application loads successfully, displays product data without hanging, and shows appropriate error messages with retry options when loading issues occur.

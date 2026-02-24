@@ -27,9 +27,7 @@ export default function LoadingTimeout({
     }
 
     const timer = setTimeout(() => {
-      if (isLoading) {
-        setHasTimedOut(true);
-      }
+      setHasTimedOut(true);
     }, timeout);
 
     return () => clearTimeout(timer);

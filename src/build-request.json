@@ -1,55 +1,83 @@
 {
   "kind": "build_request",
-  "title": "Add product image with clickable redirect to Meesho affiliate link",
-  "projectName": "Fashion Forum",
-  "priority": "normal",
+  "title": "Resolve loading issue",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Add the uploaded product image (ms_dxrpu_512_613389026.jpg) to the product browsing page below the existing content sections",
-      "target": "frontend",
+      "text": "Investigate and fix the loading issue preventing the application from loading properly. Check for infinite loading states, failed queries, or component mounting problems in ProductBrowse.tsx, SwipeableGallery.tsx, and related data-fetching hooks.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-user"
+          "msg-user-1"
         ],
         "quotes": [
-          "Add image below it"
+          "Resolve the loading issue"
         ]
       },
       "acceptanceCriteria": [
-        "The uploaded t-shirt product image is displayed on the ProductBrowse page",
-        "The image appears below the existing SwipeableGallery and CategoryImageSection components",
-        "The image maintains proper aspect ratio and responsive sizing"
+        "The application loads successfully without hanging on loading states",
+        "All product data fetches complete within reasonable timeframes",
+        "Loading spinners disappear once data is available",
+        "Error boundaries handle any loading failures gracefully"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Make the product image clickable and redirect to the Meesho affiliate URL: https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories when clicked",
+      "text": "Review and optimize the useQueries hooks for product fetching to ensure queries are not stuck in pending states or causing re-render loops.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user"
-        ],
-        "quotes": [
-          "add lookout options on clicking it redirect into https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=613389026&ext_id=a57202&utm_source=instagram_stories"
+          "msg-user-1"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking the product image opens the Meesho affiliate link in a new tab",
-        "The full URL with all query parameters is preserved in the redirect",
-        "Visual affordance (hover effect or cursor change) indicates the image is clickable"
+        "React Query hooks properly handle loading, error, and success states",
+        "No infinite re-fetching or query loops occur",
+        "Query invalidation logic does not cause cascading re-renders"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Verify the LoadingTimeout component is properly configured and triggers timeout alerts if backend queries exceed reasonable durations.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "LoadingTimeout displays after the configured timeout period if loading persists",
+        "Users are presented with a retry option when timeouts occur",
+        "Loading states resolve correctly after successful retries"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Check backend actor initialization in useActor.ts to ensure the actor is being created successfully and not causing frontend queries to hang.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The backend actor initializes correctly for both authenticated and anonymous users",
+        "Actor creation failures are properly caught and reported",
+        "Dependent queries only execute after the actor is ready"
       ]
     }
   ],
   "constraints": [
-    "Use the exact uploaded image filename: ms_dxrpu_512_613389026.jpg",
-    "Preserve the complete Meesho affiliate URL with all query parameters",
-    "Follow existing image loading patterns using useImageLoader hook and LoadingTimeout component"
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts",
+    "Do not modify frontend/src/hooks/useActor.ts",
+    "Do not modify frontend/src/main.tsx",
+    "Preserve existing React Query configuration"
   ],
   "nonGoals": [
-    "Creating a new backend product entry for this image",
-    "Modifying the existing SwipeableGallery or WatchProductSection components",
-    "Adding image editing or transformation features"
+    "Redesigning the loading UI",
+    "Adding new features unrelated to the loading issue",
+    "Changing the authentication flow"
   ],
   "imageRequirements": {
     "required": [],

@@ -47,6 +47,7 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Call all hooks at the top level, before any conditional returns
   const swipeHandlers = useSwipeGesture({
     onSwipeLeft: goToNext,
     onSwipeRight: goToPrevious,
@@ -56,6 +57,17 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
   const { imageSrc: promoImageSrc, isLoading: promoLoading } = useImageLoader({
     src: '/assets/ms_swnvi_512_735387723.jpg',
   });
+
+  // Handle empty images array AFTER all hooks are called
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full max-w-2xl mx-auto">
+        <div className="relative overflow-hidden rounded-lg shadow-xl bg-muted aspect-[3/4] flex items-center justify-center">
+          <p className="text-muted-foreground">No images available</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -135,28 +147,21 @@ export default function SwipeableGallery({ images, meeshoUrl }: SwipeableGallery
         </Button>
       </div>
 
-      {/* Clickable Promotional Image */}
-      <div className="mt-6">
-        <a
-          href="https://affiliate.meesho.com/collection/MjAwMTM3Nzo6Ojo6Om5vcm1hbA=="
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] cursor-pointer relative"
-        >
-          {promoLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-muted">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          )}
-          <img
-            src={promoImageSrc}
-            alt="Fashion collection - Wide leg pants and sneakers"
-            className={`w-full h-auto object-cover transition-opacity duration-300 ${
-              promoLoading ? 'opacity-0' : 'opacity-100'
-            }`}
-            loading="lazy"
-          />
-        </a>
+      {/* Promotional Image Below Gallery */}
+      <div className="mt-8 relative overflow-hidden rounded-lg shadow-lg">
+        {promoLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-muted">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        )}
+        <img
+          src={promoImageSrc}
+          alt="Promotional Product"
+          className={`w-full h-auto object-cover transition-opacity duration-300 ${
+            promoLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+          loading="lazy"
+        />
       </div>
     </div>
   );
