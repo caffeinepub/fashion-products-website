@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface UseImageLoaderOptions {
   src: string;
@@ -23,25 +23,59 @@ export function useImageLoader({
   const [imageSrc, setImageSrc] = useState<string>(src);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [retryCount, setRetryCount] = useState<number>(0);
+  const [loadTrigger, setLoadTrigger] = useState<number>(0);
 
-  const loadImage = useCallback(() => {
+  // Use refs to avoid stale closures and circular dependencies
+  const retryCountRef = useRef<number>(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    // Reset retry count when src changes
+    retryCountRef.current = 0;
+    setIsLoading(true);
+    setHasError(false);
+    setImageSrc(src);
+  }, [src]);
+
+  useEffect(() => {
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
+    // Abort any in-flight image load
+    if (imgRef.current) {
+      imgRef.current.onload = null;
+      imgRef.current.onerror = null;
+      imgRef.current = null;
+    }
+
     setIsLoading(true);
     setHasError(false);
 
     const img = new Image();
-    
+    imgRef.current = img;
+
     img.onload = () => {
+      if (imgRef.current !== img) return; // stale load
       setIsLoading(false);
       setHasError(false);
       setImageSrc(src);
+      imgRef.current = null;
     };
 
     img.onerror = () => {
-      if (retryCount < maxRetries) {
-        // Retry after delay
-        setTimeout(() => {
-          setRetryCount((prev) => prev + 1);
+      if (imgRef.current !== img) return; // stale load
+      imgRef.current = null;
+
+      if (retryCountRef.current < maxRetries) {
+        retryCountRef.current += 1;
+        // Schedule a retry by updating the trigger after a delay
+        timeoutRef.current = setTimeout(() => {
+          timeoutRef.current = null;
+          setLoadTrigger((prev) => prev + 1);
         }, retryDelay);
       } else {
         // Max retries reached, use fallback
@@ -52,16 +86,29 @@ export function useImageLoader({
     };
 
     img.src = src;
-  }, [src, fallbackSrc, retryCount, maxRetries, retryDelay]);
 
-  useEffect(() => {
-    loadImage();
-  }, [loadImage]);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (imgRef.current) {
+        imgRef.current.onload = null;
+        imgRef.current.onerror = null;
+        imgRef.current = null;
+      }
+    };
+    // loadTrigger is intentionally included to re-run on retry
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src, loadTrigger]);
 
   const retry = useCallback(() => {
-    setRetryCount(0);
-    loadImage();
-  }, [loadImage]);
+    retryCountRef.current = 0;
+    setHasError(false);
+    setIsLoading(true);
+    setImageSrc(src);
+    setLoadTrigger((prev) => prev + 1);
+  }, [src]);
 
   return {
     imageSrc,

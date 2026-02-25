@@ -1,36 +1,40 @@
 {
   "kind": "build_request",
-  "title": "Reload Attack on Titan gallery image",
+  "title": "Resolve image loading issue in product browsing page",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
+      "text": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-latest"
         ],
         "quotes": [
-          "Reload attack on titan image"
+          "Resolve loading issue"
         ]
       },
       "acceptanceCriteria": [
-        "The Attack on Titan gallery image is visibly updated/refreshed in the AttackOnTitanGallery component",
-        "The image loads correctly without errors in the gallery",
-        "Existing gallery navigation (arrows, thumbnails) continues to function as before"
+        "The ProductBrowse page loads all sections without displaying a stuck loading spinner",
+        "The LoadingTimeout component does not prematurely trigger the timeout alert under normal conditions",
+        "Images in SwipeableGallery, AttackOnTitanGallery, WatchProductSection, and MeeshoProductSection load correctly",
+        "The useImageLoader hook retries failed image loads and falls back to a placeholder without freezing the UI",
+        "No indefinite loading states remain visible after content has been fetched"
       ]
     }
   ],
-  "constraints": [],
+  "constraints": [
+    "Do not modify files under frontend/src/hooks/useActor.ts, frontend/src/hooks/useInternetIdentity.ts, or frontend/src/main.tsx",
+    "Do not alter the backend Motoko actor"
+  ],
   "nonGoals": [
-    "Modifying the AttackOnTitanGallery component logic or swipe behavior",
-    "Changing any other product images or gallery components"
+    "Adding new product features or pages",
+    "Changing the visual design or color theme",
+    "Backend data model changes"
   ],
   "imageRequirements": {
-    "required": [
-      "Attack on Titan anime graphic T-shirt product photo showing bold red and dark graphic design with Survey Corps wings motif on a clean background (attack-on-titan-shirt.dim_800x1000.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

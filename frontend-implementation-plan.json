@@ -1,21 +1,58 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Reload Attack on Titan gallery image",
+  "title": "Fix image loading issue in product browsing page",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version",
+      "summary": "Fix loading issue on ProductBrowse page to ensure all images and sections load correctly without hanging spinners or timeout states",
       "acceptanceCriteria": [
-        "The Attack on Titan gallery image is visibly updated/refreshed in the AttackOnTitanGallery component",
-        "The image loads correctly without errors in the gallery",
-        "Existing gallery navigation (arrows, thumbnails) continues to function as before"
+        "The ProductBrowse page loads all sections without displaying a stuck loading spinner",
+        "The LoadingTimeout component does not prematurely trigger the timeout alert under normal conditions",
+        "Images in SwipeableGallery, AttackOnTitanGallery, WatchProductSection, and MeeshoProductSection load correctly",
+        "The useImageLoader hook retries failed image loads and falls back to a placeholder without freezing the UI",
+        "No indefinite loading states remain visible after content has been fetched"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/hooks/useImageLoader.ts",
+          "operation": "modify",
+          "description": "Review and fix the retry logic to prevent infinite loading states. Ensure the hook properly transitions from loading to error states when retries are exhausted. Add timeout handling to prevent hanging on network issues. Ensure the fallback placeholder loads correctly and doesn't cause additional loading cycles."
+        },
+        {
+          "path": "frontend/src/components/LoadingTimeout.tsx",
+          "operation": "modify",
+          "description": "Adjust timeout duration or timeout logic to prevent premature timeout alerts during normal image loading. Ensure the component properly resets state when loading completes successfully. Consider increasing the timeout threshold or making it configurable based on the context (e.g., gallery with multiple images vs single image)."
+        },
+        {
+          "path": "frontend/src/pages/ProductBrowse.tsx",
+          "operation": "modify",
+          "description": "Review the loading state management for all sections (SwipeableGallery, AttackOnTitanGallery, WatchProductSection, MeeshoProductSection, CategoryImageSection). Ensure that each section's loading state is properly tracked and resolved independently. Fix any conditional rendering logic that might cause sections to remain in a loading state indefinitely. Verify that the LoadingTimeout component usage is appropriate for the page-level loading state and that it completes once products are fetched, not waiting for all images to load."
+        },
+        {
+          "path": "frontend/src/components/SwipeableGallery.tsx",
+          "operation": "modify",
+          "description": "Review the integration with useImageLoader hook to ensure images load correctly with retry logic. Fix any issues where the gallery remains in a loading state after images have loaded or failed. Ensure the gallery displays the placeholder correctly when image loading fails after retries. Verify that the Meesho link button and navigation controls are accessible even during image loading."
+        },
+        {
           "path": "frontend/src/components/AttackOnTitanGallery.tsx",
           "operation": "modify",
-          "description": "Update the image reference to use the newly generated Attack on Titan T-shirt image at frontend/public/assets/generated/attack-on-titan-shirt.dim_800x1000.png. Replace the existing image path in the component's image array with this workspace file path to display the refreshed static asset. Ensure the image loads correctly with existing loading states and maintains compatibility with the swipeable gallery navigation (arrows, thumbnails)."
+          "description": "Review image loading logic and ensure images load correctly with proper error handling. Fix any hanging loading states caused by image load failures. Ensure the component transitions to a stable state (showing images or error/placeholder) rather than remaining in loading indefinitely. Verify the Meesho affiliate link remains functional during image loading."
+        },
+        {
+          "path": "frontend/src/components/WatchProductSection.tsx",
+          "operation": "modify",
+          "description": "Review the carousel's lazy loading implementation and ensure images load correctly without freezing the UI. Fix any issues where the component remains in a loading state after images have loaded or failed. Ensure the Meesho affiliate link button with lookout icon remains accessible during loading."
+        },
+        {
+          "path": "frontend/src/components/MeeshoProductSection.tsx",
+          "operation": "modify",
+          "description": "Review the image loading spinner logic and ensure it properly transitions to showing the image or an error state. Fix any hanging loading states that prevent the hover overlay and Meesho link from functioning. Ensure the component handles image load failures gracefully without indefinite loading."
+        },
+        {
+          "path": "frontend/src/components/CategoryImageSection.tsx",
+          "operation": "modify",
+          "description": "Review the lazy loading and skeleton placeholder logic for the product grid. Ensure that loading states for individual images resolve correctly and don't prevent the section from becoming interactive. Fix any issues where error states cause the entire section to remain in loading mode. Verify that the expandable category functionality works even when some images are still loading or have failed."
         }
       ]
     }

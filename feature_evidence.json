@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-regenerate-and-reload-the-attack-on-titan-t-shirt-image-used-in-the-attackontitangallery-component-to-refresh-the-static-asset-with-an-updated-version",
-      "featureTitle": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
+      "featureId": "feature-fix-the-loading-issue-on-the-productbrowse-page-so-that-product-images-gallery-images-including-the-newly-replaced-image-and-promotional-sections-load-correctly-without-hanging-spinners-or-timeout-states-ensure-the-loadingtimeout-component-useimageloader-hook-retry-logic-and-any-lazy-loading-mechanisms-work-as-expected-for-all-image-sections",
+      "featureTitle": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
       "files": [
-        "frontend/src/components/AttackOnTitanGallery.tsx"
+        "frontend/src/hooks/useImageLoader.ts"
       ],
       "components": [
         "authorization@4.0.0",

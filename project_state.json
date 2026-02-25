@@ -4,12 +4,11 @@
   "summary": "New project",
   "architectural_notes": [],
   "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Attack on Titan anime graphic T-shirt product photo showing bold red and dark graphic design with Survey Corps wings motif on a clean background (attack-on-titan-shirt.dim_800x1000.png)",
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-regenerate-and-reload-the-attack-on-titan-t-shirt-image-used-in-the-attackontitangallery-component-to-refresh-the-static-asset-with-an-updated-version",
-      "title": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
+      "id": "feature-fix-the-loading-issue-on-the-productbrowse-page-so-that-product-images-gallery-images-including-the-newly-replaced-image-and-promotional-sections-load-correctly-without-hanging-spinners-or-timeout-states-ensure-the-loadingtimeout-component-useimageloader-hook-retry-logic-and-any-lazy-loading-mechanisms-work-as-expected-for-all-image-sections",
+      "title": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
       "reqIds": [
         "REQ-1"
       ],
@@ -17,7 +16,7 @@
     }
   ],
   "new_feature_requests": [],
-  "projectName": "Reload Attack on Titan gallery image",
+  "projectName": "Resolve image loading issue in product browsing page",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-24T10:44:47.227Z",
+  "generatedAt": "2026-02-25T02:48:04.745Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,25 +12,30 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Regenerate and reload the Attack on Titan T-shirt image used in the AttackOnTitanGallery component to refresh the static asset with an updated version.",
+        "summary": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/AttackOnTitanGallery.tsx"
+          "frontend/src/hooks/useImageLoader.ts",
+          "frontend/src/components/LoadingTimeout.tsx",
+          "frontend/src/pages/ProductBrowse.tsx",
+          "frontend/src/components/SwipeableGallery.tsx",
+          "frontend/src/components/AttackOnTitanGallery.tsx",
+          "frontend/src/components/WatchProductSection.tsx",
+          "frontend/src/components/MeeshoProductSection.tsx",
+          "frontend/src/components/CategoryImageSection.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/AttackOnTitanGallery.tsx"
+          "frontend/src/hooks/useImageLoader.ts"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/attack-on-titan-shirt.dim_800x1000.png",
-    "frontend/src/components/AttackOnTitanGallery.tsx",
+    "frontend/src/hooks/useImageLoader.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
