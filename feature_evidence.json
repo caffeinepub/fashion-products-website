@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-loading-issue-on-the-productbrowse-page-so-that-product-images-gallery-images-including-the-newly-replaced-image-and-promotional-sections-load-correctly-without-hanging-spinners-or-timeout-states-ensure-the-loadingtimeout-component-useimageloader-hook-retry-logic-and-any-lazy-loading-mechanisms-work-as-expected-for-all-image-sections",
-      "featureTitle": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
+      "featureId": "feature-add-a-new-promotional-section-to-the-productbrowse-page-that-displays-the-uploaded-pink-kurta-suit-image-stored-as-frontend-public-assets-generated-kurta-suit-pink-dim-600x800-jpg-followed-immediately-below-by-a-lookout-button-clicking-the-button-must-open-https-amzn-to-4rgavqa-in-a-new-tab",
+      "featureTitle": "Add a new promotional section to the ProductBrowse page that displays the uploaded pink kurta suit image (stored as frontend/public/assets/generated/kurta-suit-pink.dim_600x800.jpg) followed immediately below by a 'Lookout' button. Clicking the button must open https://amzn.to/4rGaVQa in a new tab.",
       "files": [
-        "frontend/src/hooks/useImageLoader.ts"
+        "frontend/src/components/KurtaSuitProductSection.tsx",
+        "frontend/src/pages/ProductBrowse.tsx"
       ],
       "components": [
         "authorization@4.0.0",

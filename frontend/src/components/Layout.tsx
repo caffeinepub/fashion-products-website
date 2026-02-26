@@ -51,14 +51,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </Link>
 
-            <nav className="flex items-center gap-4">
+            <nav className="flex items-center gap-3">
               {isAuthenticated && userProfile && (
                 <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
                   <User className="h-4 w-4" />
                   <span>{userProfile.name}</span>
                 </div>
               )}
-              
+
               {isAdmin && (
                 <Link to="/admin">
                   <Button variant="outline" size="sm" className="gap-2">
@@ -67,6 +67,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </Button>
                 </Link>
               )}
+
+              {/* Pinterest profile link */}
+              <a
+                href="https://pin.it/3IJh0Xjlm"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Pinterest"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#E60023] text-white hover:bg-[#ad081b] transition-colors shadow-sm flex-shrink-0"
+              >
+                <SiPinterest className="h-5 w-5" />
+              </a>
 
               <Button
                 onClick={handleAuth}

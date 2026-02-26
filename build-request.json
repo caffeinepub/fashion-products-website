@@ -1,40 +1,43 @@
 {
   "kind": "build_request",
-  "title": "Resolve image loading issue in product browsing page",
+  "title": "Add kurta suit product image with Lookout button linking to Amazon",
+  "projectName": "Fashion Forum",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
+      "text": "Add a new promotional section to the ProductBrowse page that displays the uploaded pink kurta suit image (stored as frontend/public/assets/generated/kurta-suit-pink.dim_600x800.jpg) followed immediately below by a 'Lookout' button. Clicking the button must open https://amzn.to/4rGaVQa in a new tab.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Resolve loading issue"
+          "Add this image below it add lookout button on clicking it redirect into https://amzn.to/4rGaVQa"
         ]
       },
       "acceptanceCriteria": [
-        "The ProductBrowse page loads all sections without displaying a stuck loading spinner",
-        "The LoadingTimeout component does not prematurely trigger the timeout alert under normal conditions",
-        "Images in SwipeableGallery, AttackOnTitanGallery, WatchProductSection, and MeeshoProductSection load correctly",
-        "The useImageLoader hook retries failed image loads and falls back to a placeholder without freezing the UI",
-        "No indefinite loading states remain visible after content has been fetched"
+        "The pink kurta suit image is visible in the ProductBrowse page as a promotional section.",
+        "A 'Lookout' button is rendered directly below the image.",
+        "Clicking the 'Lookout' button opens https://amzn.to/4rGaVQa in a new browser tab.",
+        "The section is styled consistently with the existing promotional sections (e.g., WatchProductSection, MeeshoProductSection).",
+        "The image is served from frontend/public/assets/generated/kurta-suit-pink.dim_600x800.jpg."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/hooks/useActor.ts, frontend/src/hooks/useInternetIdentity.ts, or frontend/src/main.tsx",
-    "Do not alter the backend Motoko actor"
+    "The Amazon affiliate URL https://amzn.to/4rGaVQa must be used exactly as provided.",
+    "Do not modify any files under frontend/src/hooks/ or frontend/src/components/ui."
   ],
   "nonGoals": [
-    "Adding new product features or pages",
-    "Changing the visual design or color theme",
-    "Backend data model changes"
+    "No backend changes required.",
+    "Do not alter any existing promotional sections or product cards.",
+    "Do not add any product data to the backend for this item."
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Woman wearing a pink printed kurta suit with dupatta, holding white flowers, on a plain light background (kurta-suit-pink.dim_600x800.jpg)"
+    ],
     "edits": []
   }
 }

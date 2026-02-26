@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T02:48:04.745Z",
+  "generatedAt": "2026-02-26T02:30:50.880Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,30 +12,29 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Fix the loading issue on the ProductBrowse page so that product images, gallery images (including the newly replaced image), and promotional sections load correctly without hanging spinners or timeout states. Ensure the LoadingTimeout component, useImageLoader hook retry logic, and any lazy-loading mechanisms work as expected for all image sections.",
+        "summary": "Add a new promotional section to the ProductBrowse page that displays the uploaded pink kurta suit image (stored as frontend/public/assets/generated/kurta-suit-pink.dim_600x800.jpg) followed immediately below by a 'Lookout' button. Clicking the button must open https://amzn.to/4rGaVQa in a new tab.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useImageLoader.ts",
-          "frontend/src/components/LoadingTimeout.tsx",
-          "frontend/src/pages/ProductBrowse.tsx",
-          "frontend/src/components/SwipeableGallery.tsx",
-          "frontend/src/components/AttackOnTitanGallery.tsx",
-          "frontend/src/components/WatchProductSection.tsx",
-          "frontend/src/components/MeeshoProductSection.tsx",
-          "frontend/src/components/CategoryImageSection.tsx"
+          "frontend/src/components/KurtaSuitProductSection.tsx",
+          "frontend/src/pages/ProductBrowse.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useImageLoader.ts"
+          "frontend/src/components/KurtaSuitProductSection.tsx",
+          "frontend/src/pages/ProductBrowse.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
+    "build-template/README.md",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/hooks/useImageLoader.ts",
+    "frontend/public/assets/generated/kurta-suit-pink.dim_600x800.jpg",
+    "frontend/src/components/KurtaSuitProductSection.tsx",
+    "frontend/src/pages/ProductBrowse.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

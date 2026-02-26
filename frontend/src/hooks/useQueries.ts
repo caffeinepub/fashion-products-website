@@ -9,10 +9,18 @@ export function useGetAllProducts() {
   return useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: async () => {
-      if (!actor) return [];
-      return actor.getAllProducts();
+      if (!actor) throw new Error('Actor not available');
+      try {
+        const result = await actor.getAllProducts();
+        return result;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to load products';
+        throw new Error(message);
+      }
     },
     enabled: !!actor && !isFetching,
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
   });
 }
 
@@ -22,10 +30,19 @@ export function useGetProduct(id: bigint | undefined) {
   return useQuery<Product | null>({
     queryKey: ['product', id?.toString()],
     queryFn: async () => {
-      if (!actor || !id) return null;
-      return actor.getProduct(id);
+      if (!actor) throw new Error('Actor not available');
+      if (id === undefined) return null;
+      try {
+        const result = await actor.getProduct(id);
+        return result;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to load product';
+        throw new Error(message);
+      }
     },
     enabled: !!actor && !isFetching && id !== undefined,
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
   });
 }
 
@@ -35,11 +52,18 @@ export function useGetProductsByCategory(category: string | null) {
   return useQuery<Product[]>({
     queryKey: ['products', 'category', category],
     queryFn: async () => {
-      if (!actor) return [];
-      if (!category) return actor.getAllProducts();
-      return actor.getProductsByCategory(category);
+      if (!actor) throw new Error('Actor not available');
+      try {
+        if (!category) return actor.getAllProducts();
+        return actor.getProductsByCategory(category);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to load products';
+        throw new Error(message);
+      }
     },
     enabled: !!actor && !isFetching,
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
   });
 }
 

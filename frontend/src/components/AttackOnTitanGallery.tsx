@@ -38,7 +38,7 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
 export default function AttackOnTitanGallery({ meeshoUrl }: AttackOnTitanGalleryProps) {
   const images = [
     '/assets/generated/attack-on-titan-shirt.dim_800x1000.png',
-    '/assets/generated/ms_cblw2_512_418433257.jpg',
+    '/assets/ms_cblw2_512_418433257.jpg',
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

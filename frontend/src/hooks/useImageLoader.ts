@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+const FALLBACK_SRC = '/assets/generated/placeholder-product.dim_400x600.png';
+
 interface UseImageLoaderOptions {
   src: string;
   fallbackSrc?: string;
@@ -16,11 +18,14 @@ interface UseImageLoaderReturn {
 
 export function useImageLoader({
   src,
-  fallbackSrc = '/assets/generated/placeholder-product.dim_400x600.png',
+  fallbackSrc = FALLBACK_SRC,
   maxRetries = 2,
   retryDelay = 1000,
 }: UseImageLoaderOptions): UseImageLoaderReturn {
-  const [imageSrc, setImageSrc] = useState<string>(src);
+  // If src is empty/falsy, immediately use fallback
+  const effectiveSrc = src && src.trim() !== '' ? src : fallbackSrc;
+
+  const [imageSrc, setImageSrc] = useState<string>(effectiveSrc);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
   const [loadTrigger, setLoadTrigger] = useState<number>(0);
@@ -35,10 +40,20 @@ export function useImageLoader({
     retryCountRef.current = 0;
     setIsLoading(true);
     setHasError(false);
-    setImageSrc(src);
+    setImageSrc(effectiveSrc);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 
   useEffect(() => {
+    // If effectiveSrc is the fallback (because src was empty), skip loading attempt
+    // and just mark as loaded with the fallback
+    if (!src || src.trim() === '') {
+      setIsLoading(false);
+      setHasError(false);
+      setImageSrc(fallbackSrc);
+      return;
+    }
+
     // Clear any pending timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -106,8 +121,9 @@ export function useImageLoader({
     retryCountRef.current = 0;
     setHasError(false);
     setIsLoading(true);
-    setImageSrc(src);
+    setImageSrc(effectiveSrc);
     setLoadTrigger((prev) => prev + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 
   return {

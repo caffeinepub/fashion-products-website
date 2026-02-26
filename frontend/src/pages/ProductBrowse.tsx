@@ -8,9 +8,11 @@ import SwipeableGallery from '../components/SwipeableGallery';
 import WatchProductSection from '../components/WatchProductSection';
 import MeeshoProductSection from '../components/MeeshoProductSection';
 import AttackOnTitanGallery from '../components/AttackOnTitanGallery';
+import KurtaSuitProductSection from '../components/KurtaSuitProductSection';
 import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
-import { ExternalLink, Loader2 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert';
+import { ExternalLink, Loader2, AlertCircle } from 'lucide-react';
 
 function PromotionalImage({ src, alt, meeshoUrl }: { src: string; alt: string; meeshoUrl: string }) {
   const { imageSrc, isLoading } = useImageLoader({ src });
@@ -69,18 +71,56 @@ export default function ProductBrowse() {
   const meeshoUrl = 'https://www.meesho.com/af_invite/234223027:youtube_long_form:2000433?p_id=563768316&ext_id=9bnif0&utm_source=youtube_long_form';
   const attackOnTitanUrl = 'https://www.meesho.com/af_invite/234223027:instagram_stories:2007896?p_id=418433257&ext_id=6x4h61&utm_source=instagram_stories';
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center text-destructive">
-          <p className="mb-4">Failed to load products. Please try again later.</p>
-          <Button onClick={() => refetch()} variant="outline">
-            Retry
-          </Button>
+  const renderProductsSection = () => {
+    if (isLoading || isPending) {
+      return (
+        <LoadingTimeout
+          isLoading={isLoading || isPending}
+          timeout={15000}
+          onRetry={() => refetch()}
+          loadingMessage="Loading products..."
+          timeoutMessage="Products are taking longer than expected to load"
+        />
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="py-8">
+          <Alert variant="destructive" className="max-w-lg mx-auto">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Failed to load products</AlertTitle>
+            <AlertDescription className="space-y-3">
+              <p>{error instanceof Error ? error.message : 'An unexpected error occurred while loading products.'}</p>
+              <Button onClick={() => refetch()} variant="outline" size="sm" className="w-full">
+                Try Again
+              </Button>
+            </AlertDescription>
+          </Alert>
         </div>
+      );
+    }
+
+    if (filteredProducts.length === 0) {
+      return (
+        <div className="text-center py-16">
+          <p className="text-muted-foreground text-lg">
+            {selectedCategory === 'All'
+              ? 'No products available yet.'
+              : `No products in "${selectedCategory}" category.`}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id.toString()} product={product} />
+        ))}
       </div>
     );
-  }
+  };
 
   return (
     <div className="min-h-screen">
@@ -120,7 +160,7 @@ export default function ProductBrowse() {
         </div>
       </div>
 
-      {/* Meesho Product Section - Now positioned above Watch Product Section */}
+      {/* Meesho Product Section */}
       <MeeshoProductSection />
 
       {/* Watch Product Section */}
@@ -148,9 +188,12 @@ export default function ProductBrowse() {
         </div>
       </div>
 
-      {/* Category Filter - Now positioned above Category Image Section */}
+      {/* Kurta Suit Product Section */}
+      <KurtaSuitProductSection />
+
+      {/* Category Filter */}
       <div className="container mx-auto px-4 pt-12 pb-6">
-        {!isLoading && !isPending && categories.length > 0 && (
+        {!isLoading && !isPending && !error && categories.length > 0 && (
           <div>
             <h2 className="text-sm font-medium text-muted-foreground mb-4">Filter by Category</h2>
             <CategoryFilter
@@ -164,31 +207,10 @@ export default function ProductBrowse() {
 
       {/* Products Section */}
       <div className="container mx-auto px-4 py-12">
-        {/* Products Grid */}
-        {isLoading || isPending ? (
-          <LoadingTimeout
-            isLoading={isLoading || isPending}
-            timeout={10000}
-            onRetry={() => refetch()}
-            loadingMessage="Loading products..."
-            timeoutMessage="Products are taking longer than expected to load"
-          />
-        ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg">
-              {selectedCategory === 'All' ? 'No products available yet.' : `No products in "${selectedCategory}" category.`}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id.toString()} product={product} />
-            ))}
-          </div>
-        )}
+        {renderProductsSection()}
       </div>
 
-      {/* Category Image Section - Now positioned at the bottom */}
+      {/* Category Image Section */}
       <CategoryImageSection />
     </div>
   );

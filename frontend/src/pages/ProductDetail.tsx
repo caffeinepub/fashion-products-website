@@ -5,15 +5,31 @@ import LoadingTimeout from '../components/LoadingTimeout';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Skeleton } from '../components/ui/skeleton';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert';
+import { ArrowLeft, ExternalLink, AlertCircle } from 'lucide-react';
 import { SiPinterest } from 'react-icons/si';
+
+const PLACEHOLDER = '/assets/generated/placeholder-product.dim_400x600.png';
 
 export default function ProductDetail() {
   const { productId } = useParams({ from: '/product/$productId' });
   const navigate = useNavigate();
-  const { data: product, isLoading, error, refetch } = useGetProduct(BigInt(productId));
 
-  const imageUrl = product?.imageUrl || '/assets/generated/placeholder-product.dim_400x600.png';
+  // Safely parse productId to BigInt
+  let parsedId: bigint | undefined;
+  try {
+    parsedId = BigInt(productId);
+  } catch {
+    parsedId = undefined;
+  }
+
+  const { data: product, isLoading, error, refetch } = useGetProduct(parsedId);
+
+  // Always call useImageLoader at the top level — use placeholder when product not yet loaded
+  const imageUrl = product?.imageUrl && product.imageUrl.trim() !== ''
+    ? product.imageUrl
+    : PLACEHOLDER;
+
   const { imageSrc, isLoading: imageLoading } = useImageLoader({
     src: imageUrl,
   });
@@ -24,7 +40,7 @@ export default function ProductDetail() {
         <div className="max-w-6xl mx-auto">
           <LoadingTimeout
             isLoading={isLoading}
-            timeout={10000}
+            timeout={15000}
             onRetry={() => refetch()}
             loadingMessage="Loading product details..."
             timeoutMessage="Product details are taking longer than expected to load"
@@ -34,15 +50,61 @@ export default function ProductDetail() {
     );
   }
 
-  if (error || !product) {
+  if (parsedId === undefined) {
     return (
       <div className="container mx-auto px-4 py-16">
-        <div className="text-center space-y-4">
-          <p className="text-destructive text-lg">Product not found</p>
-          <div className="flex gap-3 justify-center">
-            <Button onClick={() => navigate({ to: '/' })}>Return to Products</Button>
-            <Button onClick={() => refetch()} variant="outline">Retry</Button>
+        <div className="max-w-lg mx-auto space-y-4">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Invalid Product</AlertTitle>
+            <AlertDescription>The product ID is invalid.</AlertDescription>
+          </Alert>
+          <Button onClick={() => navigate({ to: '/' })} className="w-full">
+            Return to Products
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-lg mx-auto space-y-4">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Failed to load product</AlertTitle>
+            <AlertDescription>
+              {error instanceof Error ? error.message : 'An unexpected error occurred while loading the product.'}
+            </AlertDescription>
+          </Alert>
+          <div className="flex gap-3">
+            <Button onClick={() => navigate({ to: '/' })} variant="outline" className="flex-1">
+              Return to Products
+            </Button>
+            <Button onClick={() => refetch()} className="flex-1">
+              Retry
+            </Button>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-lg mx-auto space-y-4">
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Product Not Found</AlertTitle>
+            <AlertDescription>
+              The product you are looking for does not exist or has been removed.
+            </AlertDescription>
+          </Alert>
+          <Button onClick={() => navigate({ to: '/' })} className="w-full">
+            Return to Products
+          </Button>
         </div>
       </div>
     );
